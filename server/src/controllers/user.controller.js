@@ -68,6 +68,14 @@ async(req,res)=>{
 router.patch("",Authentication,async(req,res)=>{
     try{
         let id= req.user._id;
+
+        if(req.body.password){
+            let user= await User.findById(id);
+            user.password= req.body.password;
+            await user.save();
+            return res.status(201).send(user);
+        }
+        
         const user= await User.findByIdAndUpdate(id,req.body,{new:true});
         res.status(200).send(user);
     }
