@@ -16,10 +16,8 @@ const userSchema= new mongoose.Schema({
 });
 
 userSchema.pre("save",function(next){
-    if(!this.isModified("password")) return next();
-
     this.password= bcrypt.hashSync(this.password,8);
-    return next();
+    next();
 });
 
 userSchema.methods.checkPassword= function(password){
