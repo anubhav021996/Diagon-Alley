@@ -32,6 +32,7 @@ router.get("/:id",async(req,res)=>{
 router.post("",
     body("firstName").notEmpty().withMessage("First name required").bail().isString().withMessage("Invalid first name"),
     body("lastName").notEmpty().withMessage("Last name required").bail().isString().withMessage("Invalid last name"),
+    body("avatar").notEmpty().withMessage("Avatar required").bail().isURL().withMessage("Invalid avatar"),
     body("email").notEmpty().withMessage("Email required").bail().isEmail().withMessage("Invalid email"),
     body("mobile").notEmpty().withMessage("Mobile number required").bail().isNumeric().withMessage("Invalid mobile number").bail().isLength({min:10,max:10}).withMessage("Mobile number should be of 10 digits"),
     body("dateOfBirth").notEmpty().withMessage("DOB required").bail().isDate().withMessage("Invalid date"),
