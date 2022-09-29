@@ -7,7 +7,7 @@ module.exports= async(req,res,next) => {
 
     if(user._id==cart.user_id) isPermitted= true;
 
-    if(!isPermitted) return res.status(403).send("Permission Denied1");
+    if(!isPermitted) return res.status(403).send("Permission Denied");
 
     next();
 }

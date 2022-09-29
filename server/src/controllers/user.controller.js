@@ -53,7 +53,7 @@ async(req,res)=>{
         user= await User.create(req.body);
         const token= newToken(user);
 
-        res.status(500).send({user,token});
+        res.status(200).send({user,token});
     }
     catch(e){
         res.status(500).send(e.message);
@@ -68,7 +68,7 @@ router.patch("",Authentication,async(req,res)=>{
             let user= await User.findById(id);
             user.password= req.body.password;
             await user.save();
-            return res.status(201).send(user);
+            return res.status(200).send(user);
         }
         
         const user= await User.findByIdAndUpdate(id,req.body,{new:true});

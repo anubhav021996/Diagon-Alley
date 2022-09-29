@@ -16,7 +16,7 @@ const cartController= require("./controllers/cart.controller");
 const ordersController= require("./controllers/orders.controller");
 
 const session = require('express-session');
-app.use(session({ secret: 'SECRET' }));
+app.use(session({ secret: process.env.secret }));
 
 app.use(express.json());
 
