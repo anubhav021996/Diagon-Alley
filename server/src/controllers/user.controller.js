@@ -34,12 +34,6 @@ router.post("",
     body("lastName").notEmpty().withMessage("Last name required").bail().isString().withMessage("Invalid last name"),
     body("avatar").notEmpty().withMessage("Avatar required").bail().isURL().withMessage("Invalid avatar"),
     body("email").notEmpty().withMessage("Email required").bail().isEmail().withMessage("Invalid email"),
-    body("mobile").notEmpty().withMessage("Mobile number required").bail().isNumeric().withMessage("Invalid mobile number").bail().isLength({min:10,max:10}).withMessage("Mobile number should be of 10 digits"),
-    body("dateOfBirth").notEmpty().withMessage("DOB required").bail().isDate().withMessage("Invalid date"),
-    body("gender").notEmpty().withMessage("gender required").bail().isString().withMessage("Invalid gender").bail().custom((value)=>{
-        if(value==="male" || value==="female" || value==="others") return true;
-        throw new Error("Gender should be Male, Female or Others");
-    }),
     body("password").notEmpty().withMessage("Password Required").bail().isStrongPassword().withMessage("Password should be Strong"),
     body("type").notEmpty().withMessage("Type required").bail().isString().withMessage("Invalid type").bail().custom((value)=>{
         if(value==="user" || value==="seller") return true;
