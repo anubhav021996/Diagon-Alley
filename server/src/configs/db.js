@@ -1,5 +1,6 @@
 const mongoose= require("mongoose");
+require("dotenv").config();
 
-const connect= () => mongoose.connect("mongodb+srv://Diagon-Alley:Diagon-Alley@diagon-alley.kverdgn.mongodb.net/?retryWrites=true&w=majority")
+const connect= () => mongoose.connect(process.env.mongo_url);
 
 module.exports= connect;

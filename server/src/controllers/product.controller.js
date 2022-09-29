@@ -54,8 +54,44 @@ router.delete("/:id",authentication,productAuthorization,async(req,res)=>{
 
 router.get("",async(req,res)=>{
     try{
-        const product= await Product.find().lean().exec();
-        res.status(200).send(product);
+        let page= req.query.page || 1;
+        let size= req.query.size || await Product.find().countDocuments();
+        const totalPages= Math.ceil((await Product.find().countDocuments())/size);
+
+        const product= await Product.find().skip((page-1)*size).limit(size).lean().exec();
+
+        res.status(200).send({product,totalPages});
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+router.get("/category/:cat",async(req,res)=>{
+    try{
+        let page= req.query.page || 1;
+        let size= req.query.size || await Product.find().countDocuments();
+        const totalPages= Math.ceil((await Product.find().countDocuments())/size);
+
+        const product= await Product.find({category:req.params.cat}).skip((page-1)*size).limit(size).lean().exec();
+
+        res.status(200).send({product,totalPages});
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
+});
+
+router.get("/seller",authentication,async(req,res)=>{
+    try{
+        let id= req.user._id;
+        let page= req.query.page || 1;
+        let size= req.query.size || await Product.find().countDocuments();
+        const totalPages= Math.ceil((await Product.find().countDocuments())/size);
+
+        const product= await Product.find({user_id:id}).skip((page-1)*size).limit(size).lean().exec();
+
+        res.status(200).send({product,totalPages});
     }
     catch(e){
         res.status(500).send(e.message);
