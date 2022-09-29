@@ -23,7 +23,7 @@ async(req,res)=>{
         if(!user) return res.status(400).send("Invalid Credentials");
 
         const match= user.checkPassword(req.body.password);
-        if(user.password!=req.body.password) return res.status(400).send("Invalid Credentials");
+        if(!match) return res.status(400).send("Invalid Credentials");
 
         let token= newToken(user);
 
