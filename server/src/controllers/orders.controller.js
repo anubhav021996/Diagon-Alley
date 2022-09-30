@@ -5,6 +5,7 @@ const Orders= require("../models/orders.model");
 const Products= require("../models/product.model");
 const authentication= require("../middlewares/authentication.middleware");
 const ordersAuthorization= require("../middlewares/ordersAuthorization.middleware");
+const { orderMail } = require("../utilis");
 
 router.post("",authentication,async(req,res)=>{
     try{
@@ -24,11 +25,17 @@ router.patch("/:id",authentication,ordersAuthorization,async(req,res)=>{
     try{
         const oldOrders= await Orders.findById(req.params.id);
         const newOrders= await Orders.findByIdAndUpdate(req.params.id,req.body,{new:true});
+
+        let obj={};
         for(let i=oldOrders.product_id.length;i<newOrders.product_id.length;i++){
             let id= newOrders.product_id[i];
             let product= await Products.findById(id);
             await Products.findByIdAndUpdate(id,{quantity:product.quantity-1},{new:true});
+            if(product.title in obj) obj[product.title]++;
+            else obj[product.title]= 1;
         }
+        orderMail(req.user,obj);
+        
         res.status(200).send(newOrders);
     }
     catch(e){

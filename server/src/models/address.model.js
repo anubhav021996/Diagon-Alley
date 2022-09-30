@@ -8,4 +8,4 @@ const addressSchema= new mongoose.Schema({
     versionKey: false
 });
 
-module.exports= mongoose.model("address",addressSchema);
+module.exports= mongoose.model("addresses",addressSchema);

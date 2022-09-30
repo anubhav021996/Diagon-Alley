@@ -14,6 +14,8 @@ const loginController= require("./controllers/login.controllers");
 const addressController= require("./controllers/address.controller");
 const cartController= require("./controllers/cart.controller");
 const ordersController= require("./controllers/orders.controller");
+const emailController= require("./controllers/email.controller");
+const otpController= require("./controllers/otp.controller");
 
 const session = require('express-session');
 app.use(session({ secret: process.env.secret }));
@@ -26,6 +28,8 @@ app.use("/login",loginController);
 app.use("/address",addressController);
 app.use("/cart",cartController);
 app.use("/orders",ordersController);
+app.use("/email",emailController);
+app.use("/otp",otpController);
 
 passport.serializeUser(function (user, done) {
     done(null, user);
