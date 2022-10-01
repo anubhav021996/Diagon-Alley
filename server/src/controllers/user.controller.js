@@ -108,8 +108,16 @@ Authentication,async(req,res)=>{
     }
 });
 
-router.patch("/reset",Authentication,async(req,res)=>{
+router.patch("/reset",
+body("password").notEmpty().withMessage("Password required").bail().isStrongPassword().withMessage("Password should be strong"),
+Authentication,async(req,res)=>{
     try{
+        const errors= validationResult(req);
+        if(!errors.isEmpty()){
+            let newErrors= errors.array().map((el)=>({key:el.param, msg: el.msg}));
+            return res.status(400).send({errors: newErrors});
+        }
+        
         req.body.email= req.user.email;
 
         let user= await User.findOne({email: req.body.email});

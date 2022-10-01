@@ -1,5 +1,6 @@
 const express= require("express");
 const router= express.Router();
+const {body, validationResult}= require("express-validator");
 
 const Orders= require("../models/orders.model");
 const Products= require("../models/product.model");
@@ -21,8 +22,16 @@ router.post("",authentication,async(req,res)=>{
     }
 });
 
-router.patch("/:id",authentication,ordersAuthorization,async(req,res)=>{
+router.patch("/:id",
+body("product_id").notEmpty().withMessage("product id required"),
+authentication,ordersAuthorization,async(req,res)=>{
     try{
+        const errors= validationResult(req);
+        if(!errors.isEmpty()){
+            let newErrors= errors.array().map((el)=>({key:el.param, msg: el.msg}));
+            return res.status(400).send({errors: newErrors});
+        }
+        
         const oldOrders= await Orders.findById(req.params.id);
         const newOrders= await Orders.findByIdAndUpdate(req.params.id,req.body,{new:true});
 
