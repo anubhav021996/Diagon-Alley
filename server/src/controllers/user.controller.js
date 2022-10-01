@@ -95,6 +95,7 @@ Authentication,async(req,res)=>{
             return res.status(400).send({errors: newErrors});
         }
         const id= req.user._id;
+        req.body.type= "seller";
         
         const user= await User.findByIdAndUpdate(id,req.body,{new:true});
         sellerMail(user);
