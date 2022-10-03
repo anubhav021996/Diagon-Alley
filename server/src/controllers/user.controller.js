@@ -24,9 +24,10 @@ router.get("",async(req,res)=>{
     }
 });
 
-router.get("/:id",async(req,res)=>{
+router.get("",Authentication,async(req,res)=>{
     try{
-        const user= await User.findById(req.params.id).lean().exec();
+        const id= req.user._id;
+        const user= await User.findById(id).lean().exec();
         res.status(200).send(user);
     }
     catch(e){
@@ -123,8 +124,9 @@ Authentication,async(req,res)=>{
         let user= await User.findOne({email: req.body.email});
         user.password= req.body.password;
         await user.save();
+        const token= newToken(user);
         resetMail(user);
-        res.status(200).send(user);
+        res.status(200).send({user,token});
     }
     catch(e){
         res.status(500).send(e.message);

@@ -1,6 +1,7 @@
 const express= require("express");
 const app= express();
 const jwt= require("jsonwebtoken");
+const cors= require("cors");
 require("dotenv").config();
 
 const newToken= (user) => jwt.sign({user},process.env.screatKey);
@@ -16,6 +17,8 @@ const cartController= require("./controllers/cart.controller");
 const ordersController= require("./controllers/orders.controller");
 const emailController= require("./controllers/email.controller");
 const otpController= require("./controllers/otp.controller");
+
+app.use(cors());
 
 const session = require('express-session');
 app.use(session({ secret: process.env.secret }));

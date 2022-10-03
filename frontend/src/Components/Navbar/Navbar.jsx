@@ -12,17 +12,39 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { PopOver } from './PopOver';
 
 import styles from "./Cart.module.css";
-import { useState } from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { User } from './User';
+import { UserIcon } from './UserIcon';
 import { Login } from './Login';
+import { addToken, addUser } from '../../Redux/Login/actionLogin';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 const navItems = ['Departments', 'Collections', 'Characters'];
 
 export const Navbar= () => {
+  const Dispatch= useDispatch();
+  const {token}= useSelector((store)=>store.auth);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const Navigate= useNavigate();
-  const [login, setLogin]= useState(false);
+
+  const handleLogout= () => {
+    Dispatch(addToken(null));
+    Dispatch(addUser(null));
+    localStorage.removeItem("token");
+  }
+
+  useEffect(()=>{
+    const token= JSON.parse(localStorage.getItem("token"));
+    if(token){
+      Dispatch(addToken(token));
+      axios.get("http://localhost:2548/user",{ headers: {
+        Authorization: 'Bearer ' + token 
+      }}).then((res)=>{
+        Dispatch(addUser(res.data[0]));
+      })
+    }
+  },[]);
 
   return (
     <>
@@ -36,7 +58,7 @@ export const Navbar= () => {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={300} alignItems={'center'}>
-            <Box>
+            <Box onClick={()=>Navigate("/")} cursor="pointer">
             <Image src="./logo.png" h={50} alt="logo" />
             </Box>
             <HStack
@@ -51,7 +73,7 @@ export const Navbar= () => {
               <Box className={styles.count}>8</Box>
               <Image src="./cart.png" className={styles.icon}/>
             </Box>
-            {login ? <User logout={()=>setLogin(false)}/> : <Login login={()=> Navigate("/login")} />}
+            {token ? <UserIcon logout={handleLogout}/> : <Login login={()=> Navigate("/login")} />}
           </Flex>
         </Flex>
 

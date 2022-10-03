@@ -16,7 +16,7 @@ import { useState } from 'react';
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
-export const Signup= () => {
+export const ForgetPassword= () => {
     const Navigate= useNavigate();
     const[text,setText]= useState("");
     const[reqOtp,setReqOtp]= useState(false);
@@ -27,7 +27,7 @@ export const Signup= () => {
 
     const sendOtp= () => {
       setReqOtp(true);
-        axios.post("http://localhost:2548/email",{email:text,type:"register"}).then((res)=>{
+        axios.post("http://localhost:2548/email",{email:text,type:"reset"}).then((res)=>{
             setOtpRec(true);
             toast({
               title: res.data,
@@ -50,7 +50,7 @@ export const Signup= () => {
     const verifyOtp= () => {
       setSentOtp(true);
         axios.post("http://localhost:2548/otp",{email:text,otp:+otp}).then((res)=>{
-        Navigate("/user",{state:{token:res.data,email:text}});
+        Navigate("/resetPassword",{state:{token:res.data,email:text}});
         })
         .catch((e)=>{
             setSentOtp(false);
@@ -79,7 +79,7 @@ export const Signup= () => {
             p={6}
             my={12}>
             <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-              Email Verification
+                Forgot your password?
             </Heading>
             <Text
               fontSize={{ base: 'sm', sm: 'md' }}
@@ -88,7 +88,7 @@ export const Signup= () => {
             </Text>
             <FormControl id="email">
               <Input
-                placeholder="Please enter a valid email"
+                placeholder="Please enter your email"
                 _placeholder={{ color: 'gray.500' }}
                 type="email" value={text} disabled={reqOtp} onChange={(e)=>setText(e.target.value)}
               />

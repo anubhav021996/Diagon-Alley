@@ -20,10 +20,10 @@ async(req,res)=>{
         }
         
         let user= await User.findOne({email: req.body.email});
-        if(!user) return res.status(400).send("Invalid Credentials");
+        if(!user) return res.status(400).send("No user found");
 
         const match= user.checkPassword(req.body.password);
-        if(!match) return res.status(400).send("Invalid Credentials");
+        if(!match) return res.status(400).send("Invalid Password");
 
         let token= newToken(user);
 

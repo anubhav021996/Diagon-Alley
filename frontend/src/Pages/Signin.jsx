@@ -10,10 +10,50 @@ import {
     Button,
     Heading,
     useColorModeValue,
+    Center,
+    Text,
+    useToast
   } from '@chakra-ui/react';
-  import {Link as ReachLink} from "react-router-dom";
+import axios from 'axios';
+import { useState } from 'react';
+  import { FcGoogle } from 'react-icons/fc';
+import { useDispatch, useSelector } from 'react-redux';
+  import {Link as ReachLink, useNavigate} from "react-router-dom";
+import { addToken, addUser } from '../Redux/Login/actionLogin';
 
 export const Signin= () => {
+  const toast= useToast();
+  const Navigate= useNavigate();
+  const Dispatch= useDispatch();
+  const {token}= useSelector((store)=>store.auth);
+  const [loginData, setLoginData]= useState({
+    email: "",
+    password: ""
+  });
+
+  if(token) Navigate("/");
+
+  const handleChange= (e) => {
+      const{value,name}= e.target;
+      setLoginData({...loginData,[name]:value});
+  }
+
+  const handleSubmit= () => {
+    axios.post("http://localhost:2548/login",loginData).then((res)=>{
+      Dispatch(addToken(res.data.token));
+      Dispatch(addUser(res.data.user));
+      localStorage.setItem("token",JSON.stringify(res.data.token));
+    })
+    .catch((e)=>{
+      toast({
+        title: e.response.data,
+        status: "error",
+        position: "top",
+        isClosable: true,
+      });
+    })
+  }
+
     return (
         <Flex
         //  minH={'100vh'}
@@ -33,11 +73,11 @@ export const Signin= () => {
               <Stack spacing={4}>
                 <FormControl id="email">
                   <FormLabel>Email address</FormLabel>
-                  <Input type="email" />
+                  <Input type="email" name="email" onChange={handleChange} />
                 </FormControl>
                 <FormControl id="password">
                   <FormLabel>Password</FormLabel>
-                  <Input type="password" />
+                  <Input type="password" name="password" onChange={handleChange} />
                 </FormControl>
                 
                 <Stack spacing={10}>
@@ -46,18 +86,31 @@ export const Signin= () => {
                     align={'start'}
                     justify={'space-between'}>
                     <Checkbox>Remember me</Checkbox>
-                    <Link color={'blue.400'}>Forgot password?</Link>
+                    <Link as={ReachLink} to="/forgetPassword" color={'blue.400'}>Forgot password?</Link>
                   </Stack>
                   <Button
                     bg={'blue.400'}
                     color={'white'}
                     _hover={{
                       bg: 'blue.500',
-                    }}>
+                    }} onClick={handleSubmit}
+                    >
                     Sign in
                   </Button>
+                  <Button
+                    w={'full'}
+                    maxW={'md'}
+                    variant={'outline'}
+                    as={ReachLink}
+                    leftIcon={<FcGoogle />}
+                    // onClick={()=>window.location.href="http://localhost:2548/auth/google"}
+                  >
+                    <Center>
+                      <Text>Sign in with Google</Text>
+                    </Center>
+                  </Button>
                 </Stack>
-                <Link as={ReachLink} to="/signup" color={'blue.400'} fontSize={'lg'} >
+                <Link as={ReachLink} to="/signup" color={'blue.400'} fontSize={'md'} >
                 Create a new account
               </Link>
               </Stack>
