@@ -16,14 +16,17 @@ import {
     useToast,
     Progress
   } from '@chakra-ui/react';
-  import { useState } from 'react';
+  import { useEffect, useState } from 'react';
   import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
   import { useLocation, Link as ReachLink, useNavigate } from 'react-router-dom';
   import axios from "axios";
+import { useDispatch, useSelector } from 'react-redux';
+import { addToken, addUser } from '../Redux/Login/actionLogin';
 
 export const User= () => {
   const {state}= useLocation();
   const Navigate= useNavigate();
+  const Dispatch= useDispatch();
   const toast= useToast();
   const [showPassword, setShowPassword] = useState(false);
   const [isUpload, setIsUpload]= useState(false);
@@ -34,23 +37,26 @@ export const User= () => {
     avatar: ""
   });
 
-  // if(!state) Navigate("/login");
+  const {token}= useSelector((store)=>store.auth);
+
+    useEffect(()=>{
+      if(token) Navigate("/");
+      if(!state) Navigate("/login");
+    },[token]);
 
   const handleChange= (e) => {
       const {value, name, type,files}= e.target;
-      let fValue;
-      console.log(type);
       if(type!=="file"){
-        fValue= value;
+        setFormData({...formData,[name]:value});
       }
       else{
         setIsUpload(true);
-        const formData = new FormData();
-        formData.append("file", files[0]);
-        formData.append("upload_preset", "diagonAlley");
-    axios.post("https://api.cloudinary.com/v1_1/dyocvbqbf/image/upload", formData)
+        const picData = new FormData();
+        picData.append("file", files[0]);
+        picData.append("upload_preset", "diagonAlley");
+    axios.post("https://api.cloudinary.com/v1_1/dyocvbqbf/image/upload", picData)
       .then((res) => {
-        fValue= res.data.url;
+        setFormData({...formData,[name]:res.data.url});
       })
       .catch((e)=>{
         toast({
@@ -63,12 +69,38 @@ export const User= () => {
       .finally(()=>{
         setIsUpload(false);
       });
-      }
-      setFormData({...formData,[name]:fValue});
+    }
   }
 
   const handleSubmit= () => {
-      console.log(formData);
+      axios.post(`${process.env.REACT_APP_BASE_URL}/user`,formData,{ headers: {
+        Authorization: 'Bearer ' + state.token 
+      }}).then((res)=>{
+        Dispatch(addToken(res.data.token));
+        Dispatch(addUser(res.data.user));
+        localStorage.setItem("token",JSON.stringify(res.data.token));
+      })
+      .catch((e)=>{
+        if(e.response.data.errors){
+          let err= e.response.data.errors;
+          err.map(({msg})=>{
+            toast({
+              title: msg,
+              status: "error",
+              position: "top",
+              isClosable: true,
+            });
+          })
+        }
+        else{
+          toast({
+            title: e.response.data,
+            status: "error",
+            position: "top",
+            isClosable: true,
+          });
+        }
+      })
   }
 
   return (
@@ -104,7 +136,7 @@ export const User= () => {
               </Box>
             </HStack>
             <FormControl id="email" isRequired>
-              <FormLabel>Email address</FormLabel>
+              <FormLabel>Email</FormLabel>
               <Input type="email" value={state?.email} disabled />
             </FormControl>
             <FormControl id="password" isRequired>
@@ -124,7 +156,7 @@ export const User= () => {
             </FormControl>
             <FormControl id="photo" isRequired>
               <FormLabel>Profile Photo</FormLabel>
-              <Input type="file" name="avatar" onChange={handleChange} />
+              <Input type="file" name="avatar" onChange={handleChange} disabled={isUpload} />
             </FormControl>
             {isUpload && <Progress size='xs' isIndeterminate />}
             <Stack spacing={10} pt={2}>

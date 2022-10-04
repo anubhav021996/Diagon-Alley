@@ -16,7 +16,7 @@ async(req,res)=>{
         const errors= validationResult(req);
         if(!errors.isEmpty()){
             let newErrors= errors.array().map((el)=>({key:el.param,msg:el.msg}));
-            return res.status(400).send(newErrors);
+            return res.status(400).send({errors:newErrors});
         }
 
         const user= await UserV.findOne({email:req.body.email});

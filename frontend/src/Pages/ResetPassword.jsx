@@ -9,15 +9,17 @@ import {
     useColorModeValue,
     InputRightElement,
     InputGroup,
+    useToast,
   } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToken, addUser } from '../Redux/Login/actionLogin';
   
   export const ResetPassword= () => {
+    const toast= useToast();
     const {state}= useLocation();
     const [password,setPassword]= useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -25,10 +27,13 @@ import { addToken, addUser } from '../Redux/Login/actionLogin';
     const Navigate= useNavigate();
     const {token}= useSelector((store)=>store.auth);
 
-    if(token) Navigate("/");
+    useEffect(()=>{
+      if(token) Navigate("/");
+      if(!state) Navigate("/login");
+    },[token]);
 
     const handleSubmit= () => {
-        axios.patch("http://localhost:2548/user/reset",{password:password},{ headers: {
+        axios.patch(`${process.env.REACT_APP_BASE_URL}/user/reset`,{password:password},{ headers: {
             Authorization: 'Bearer ' + state.token 
           }}).then((res)=>{
             Dispatch(addToken(res.data.token));
@@ -36,7 +41,25 @@ import { addToken, addUser } from '../Redux/Login/actionLogin';
             localStorage.setItem("token",JSON.stringify(res.data.token));
         })
         .catch((e)=>{
-            console.log(e);
+          if(e.response.data.errors){
+            let err= e.response.data.errors;
+            err.map(({msg})=>{
+              toast({
+                title: msg,
+                status: "error",
+                position: "top",
+                isClosable: true,
+              });
+            })
+          }
+          else{
+            toast({
+              title: e.response.data,
+              status: "error",
+              position: "top",
+              isClosable: true,
+            });
+          }
         })
     }
 
@@ -59,9 +82,9 @@ import { addToken, addUser } from '../Redux/Login/actionLogin';
             Enter new password
           </Heading>
           <FormControl id="email" isRequired>
-            <FormLabel>Email address</FormLabel>
+            <FormLabel>Email</FormLabel>
             <Input
-                value={state.email} disabled
+                value={state?.email} disabled
               _placeholder={{ color: 'gray.500' }}
               type="email"
             />

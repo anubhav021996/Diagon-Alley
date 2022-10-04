@@ -38,7 +38,7 @@ export const Navbar= () => {
     const token= JSON.parse(localStorage.getItem("token"));
     if(token){
       Dispatch(addToken(token));
-      axios.get("http://localhost:2548/user",{ headers: {
+      axios.get(`${process.env.REACT_APP_BASE_URL}/user`,{ headers: {
         Authorization: 'Bearer ' + token 
       }}).then((res)=>{
         Dispatch(addUser(res.data[0]));

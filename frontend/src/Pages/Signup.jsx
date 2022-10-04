@@ -12,9 +12,10 @@ import {
     Box,
     useToast
   } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import { useSelector } from 'react-redux';
 
 export const Signup= () => {
     const Navigate= useNavigate();
@@ -22,12 +23,27 @@ export const Signup= () => {
     const[reqOtp,setReqOtp]= useState(false);
     const[sentOtp,setSentOtp]= useState(false);
     const[otpRec,setOtpRec]= useState(false);
-    const[otp,setOtp]= useState("");
+    const {token}= useSelector((store)=>store.auth);
+    const[otp,setOtp]= useState({
+      otp1:"",
+      otp2:"",
+      otp3:"",
+      otp4:"",
+    });
     const toast= useToast();
+
+    useEffect(()=>{
+      if(token) Navigate("/");
+    },[token]);
+
+    const handleChange= (e) => {
+      const {value,name}= e.target;
+      setOtp({...otp,[name]:value});
+  }
 
     const sendOtp= () => {
       setReqOtp(true);
-        axios.post("http://localhost:2548/email",{email:text,type:"register"}).then((res)=>{
+        axios.post(`${process.env.REACT_APP_BASE_URL}/email`,{email:text,type:"register"}).then((res)=>{
             setOtpRec(true);
             toast({
               title: res.data,
@@ -38,28 +54,55 @@ export const Signup= () => {
         })
         .catch((e)=>{
             setReqOtp(false);
-            toast({
-              title: e.response.data,
-              status: "error",
-              position: "top",
-              isClosable: true,
-            })
+            if(e.response.data.errors){
+              let err= e.response.data.errors;
+              err.map(({msg})=>{
+                toast({
+                  title: msg,
+                  status: "error",
+                  position: "top",
+                  isClosable: true,
+                });
+              })
+            }
+            else{
+              toast({
+                title: e.response.data,
+                status: "error",
+                position: "top",
+                isClosable: true,
+              });
+            }
         })
     }
 
     const verifyOtp= () => {
+      let finalOtp= otp.otp1+otp.otp2+otp.otp3+otp.otp4;
       setSentOtp(true);
-        axios.post("http://localhost:2548/otp",{email:text,otp:+otp}).then((res)=>{
+        axios.post(`${process.env.REACT_APP_BASE_URL}/otp`,{email:text,otp:+finalOtp}).then((res)=>{
         Navigate("/user",{state:{token:res.data,email:text}});
         })
         .catch((e)=>{
             setSentOtp(false);
-            toast({
-              title: e.response.data,
-              status: "error",
-              position: "top",
-              isClosable: true,
-            })
+            if(e.response.data.errors){
+              let err= e.response.data.errors;
+              err.map(({msg})=>{
+                toast({
+                  title: msg,
+                  status: "error",
+                  position: "top",
+                  isClosable: true,
+                });
+              })
+            }
+            else{
+              toast({
+                title: e.response.data,
+                status: "error",
+                position: "top",
+                isClosable: true,
+              });
+            }
         })
     }
 
@@ -107,10 +150,10 @@ export const Signup= () => {
             {otpRec && <Stack>
             <Box>
                 <PinInput otp >
-                    <PinInputField onChange={(e)=>setOtp(otp+e.target.value)}/>
-                    <PinInputField onChange={(e)=>setOtp(otp+e.target.value)}/>
-                    <PinInputField onChange={(e)=>setOtp(otp+e.target.value)}/>
-                    <PinInputField onChange={(e)=>setOtp(otp+e.target.value)}/>
+                    <PinInputField name="otp1" onChange={handleChange}/>
+                    <PinInputField name="otp2" onChange={handleChange}/>
+                    <PinInputField name="otp3" onChange={handleChange}/>
+                    <PinInputField name="otp4" onChange={handleChange}/>
                 </PinInput>
             </Box>
             <Box display="flex" justifyContent="space-evenly">

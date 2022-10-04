@@ -15,6 +15,7 @@ import {
     useToast
   } from '@chakra-ui/react';
 import axios from 'axios';
+import { useEffect } from 'react';
 import { useState } from 'react';
   import { FcGoogle } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,7 +32,10 @@ export const Signin= () => {
     password: ""
   });
 
-  if(token) Navigate("/");
+  useEffect(()=>{
+    if(token) Navigate("/");
+  },[token]);
+  
 
   const handleChange= (e) => {
       const{value,name}= e.target;
@@ -39,18 +43,31 @@ export const Signin= () => {
   }
 
   const handleSubmit= () => {
-    axios.post("http://localhost:2548/login",loginData).then((res)=>{
+    axios.post(`${process.env.REACT_APP_BASE_URL}/login`,loginData).then((res)=>{
       Dispatch(addToken(res.data.token));
       Dispatch(addUser(res.data.user));
       localStorage.setItem("token",JSON.stringify(res.data.token));
     })
     .catch((e)=>{
-      toast({
-        title: e.response.data,
-        status: "error",
-        position: "top",
-        isClosable: true,
-      });
+      if(e.response.data.errors){
+        let err= e.response.data.errors;
+        err.map(({msg})=>{
+          toast({
+            title: msg,
+            status: "error",
+            position: "top",
+            isClosable: true,
+          });
+        })
+      }
+      else{
+        toast({
+          title: e.response.data,
+          status: "error",
+          position: "top",
+          isClosable: true,
+        });
+      }
     })
   }
 
@@ -72,7 +89,7 @@ export const Signin= () => {
               p={8}>
               <Stack spacing={4}>
                 <FormControl id="email">
-                  <FormLabel>Email address</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <Input type="email" name="email" onChange={handleChange} />
                 </FormControl>
                 <FormControl id="password">

@@ -15,7 +15,7 @@ async(req,res)=>{
     try{
         const errors= validationResult(req);
         if(!errors.isEmpty()){
-            const newError= errors.array.map((el)=>({key:el.params, msg:el.msg}));
+            const newError= errors.array().map((el)=>({key:el.params, msg:el.msg}));
             return res.status(400).send({errors: newError});
         }
         
