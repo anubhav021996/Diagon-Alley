@@ -1,5 +1,6 @@
 import {Menu,MenuButton,Button,Avatar,MenuList,MenuItem,MenuDivider} from "@chakra-ui/react";
 import { useSelector } from "react-redux";
+import {Link} from "react-router-dom";
 
 export const UserIcon= ({logout}) => {
   const {user}= useSelector((store)=>store.auth);
@@ -20,7 +21,7 @@ export const UserIcon= ({logout}) => {
               <MenuList>
                 <MenuItem>Profile</MenuItem>
                 <MenuItem>My Orders</MenuItem>
-                <MenuItem>My Addresses</MenuItem>
+                <Link to="/address"><MenuItem>My Addresses</MenuItem></Link>
                 <MenuItem>Become a seller</MenuItem>
                 <MenuDivider />
                 <MenuItem onClick={logout}>Sign out</MenuItem>

@@ -54,7 +54,7 @@ export const User= () => {
         const picData = new FormData();
         picData.append("file", files[0]);
         picData.append("upload_preset", "diagonAlley");
-    axios.post("https://api.cloudinary.com/v1_1/dyocvbqbf/image/upload", picData)
+    axios.post(process.env.REACT_APP_IMAGE_URL, picData)
       .then((res) => {
         setFormData({...formData,[name]:res.data.url});
       })

@@ -14,15 +14,15 @@ const { welcomeMail, adminMail, resetMail, sellerMail, adminSellerMail } = requi
 
 const newToken= (user) => jwt.sign({user},process.env.screatKey);
 
-router.get("",async(req,res)=>{
-    try{
-        const user= await User.find().lean().exec();
-        res.status(200).send(user);
-    }
-    catch(e){
-        res.status(500).send(e.message);
-    }
-});
+// router.get("",async(req,res)=>{
+//     try{
+//         const user= await User.find().lean().exec();
+//         res.status(200).send(user);
+//     }
+//     catch(e){
+//         res.status(500).send(e.message);
+//     }
+// });
 
 router.get("",Authentication,async(req,res)=>{
     try{

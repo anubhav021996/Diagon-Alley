@@ -41,7 +41,7 @@ export const Navbar= () => {
       axios.get(`${process.env.REACT_APP_BASE_URL}/user`,{ headers: {
         Authorization: 'Bearer ' + token 
       }}).then((res)=>{
-        Dispatch(addUser(res.data[0]));
+        Dispatch(addUser(res.data));
       })
     }
   },[]);

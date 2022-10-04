@@ -21,7 +21,7 @@ module.exports= async(req,res,next) => {
         user= await verifyToken(token);
     }
     catch(e){
-        res.status(400).send("Invalid authorization");
+        return res.status(400).send("Invalid authorization");
     }
     
     req.user= user.user;

@@ -8,6 +8,7 @@ import { ResetPassword } from "../Pages/ResetPassword";
 import { Seller } from "../Pages/Seller";
 import { AddProduct } from "../Pages/AddProduct";
 import { AddAddress } from "../Pages/AddAddress";
+import { Address } from "../Pages/Address";
 
 export const AllRoutes= () => {
     return(
@@ -21,6 +22,7 @@ export const AllRoutes= () => {
             <Route path={"/seller"} element={<Seller />} />
             <Route path={"/addProduct"} element={<AddProduct />} />
             <Route path={"/addAddress"} element={<AddAddress />} />
+            <Route path={"/address"} element={<Address />} />
         </Routes>
     )
 }
