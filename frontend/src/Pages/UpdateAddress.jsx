@@ -25,15 +25,22 @@ export const UpdateAddress= () => {
     });
     const {token}= useSelector((store)=>store.auth);
     const [address,setAddress]= useState([]);
-    const {state:{index}}= useLocation();
+    const {state}= useLocation();
     const Navigate= useNavigate();
     
     useEffect(()=>{
-        if(!token) return;
+      if(!state){
+        Navigate("/address");
+        return;
+      }
+      if(!token){
+        Navigate("/login");
+        return;
+      } 
         axios.get(`${process.env.REACT_APP_BASE_URL}/address`,{ headers: {
             Authorization: 'Bearer ' + token 
           }}).then((res)=>{
-            let oldAddress= res.data.address[index].split(",");
+            let oldAddress= res.data.address[state.index].split(",");
             setAddressForm({
                 addLine1: oldAddress[0],
                 addLine2: oldAddress[1],
@@ -57,7 +64,7 @@ export const UpdateAddress= () => {
     const handleSubmit= () => {
         let finalAddress= `${addressForm.addLine1},${addressForm.addLine2},${addressForm.city},${addressForm.state},${addressForm.pincode},${addressForm.phone}`;
         let addArr= address.address;
-        addArr[index]=finalAddress;
+        addArr[state.index]=finalAddress;
         axios.patch(`${process.env.REACT_APP_BASE_URL}/address/${address._id}`,{address:addArr},{ headers: {
           Authorization: 'Bearer ' + token 
         }}).then((res)=>{

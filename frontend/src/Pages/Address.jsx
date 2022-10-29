@@ -11,7 +11,10 @@ export const Address= () => {
     const Navigate= useNavigate();
     
     useEffect(()=>{
-        if(!token) return;
+      if(!token){
+        Navigate("/login");
+        return;
+      }
         axios.get(`${process.env.REACT_APP_BASE_URL}/address`,{ headers: {
             Authorization: 'Bearer ' + token 
           }}).then((res)=>{

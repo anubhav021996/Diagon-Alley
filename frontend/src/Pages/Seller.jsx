@@ -8,8 +8,13 @@ import {
     Input,
     Stack,
     useColorModeValue,
+    useToast,
   } from '@chakra-ui/react';
+import axios from 'axios';
+import { useEffect } from 'react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export const Seller= () => {
     const [sellerData,setSellerData]= useState({
@@ -27,6 +32,14 @@ export const Seller= () => {
         phone: ""
     });
 
+    const {token}= useSelector((store)=>store.auth);
+    const toast= useToast();
+    const Navigate= useNavigate();
+
+    useEffect(()=>{
+      if(!token) Navigate("/login");
+    },[]);
+
     const handleChange= (e) =>{
         const {name,value}= e.target;
         setSellerData({...sellerData, [name]:value});
@@ -41,7 +54,21 @@ export const Seller= () => {
         delete sellerData.state;
         delete sellerData.pincode;
         delete sellerData.phone;
-        console.log(sellerData);
+        axios.patch(`${process.env.REACT_APP_BASE_URL}/user/seller`,sellerData,{ headers: {
+          Authorization: 'Bearer ' + token 
+        }}).then((res)=>{
+          Navigate("/");
+      })
+      .catch((e)=>{
+        e.response.data.errors.map((el)=>(
+          toast({
+            title: el.msg,
+            status: "error",
+            position: "top",
+            isClosable: true,
+          })
+        ))
+      })
     }
 
     return (

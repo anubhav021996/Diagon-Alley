@@ -10,6 +10,7 @@ import { AddProduct } from "../Pages/AddProduct";
 import { AddAddress } from "../Pages/AddAddress";
 import { Address } from "../Pages/Address";
 import { UpdateAddress } from "../Pages/UpdateAddress";
+import { SellerDashboard } from "../Pages/SellerDashboard";
 
 export const AllRoutes= () => {
     return(
@@ -21,6 +22,7 @@ export const AllRoutes= () => {
             <Route path={"/forgetPassword"} element={<ForgetPassword />} />
             <Route path={"/resetPassword"} element={<ResetPassword />} />
             <Route path={"/seller"} element={<Seller />} />
+            <Route path={"/sellerDashboard"} element={<SellerDashboard />} />
             <Route path={"/addProduct"} element={<AddProduct />} />
             <Route path={"/addAddress"} element={<AddAddress />} />
             <Route path={"/updateAddress"} element={<UpdateAddress />} />
