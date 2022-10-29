@@ -9,11 +9,20 @@ import {
     Stack,
     useColorModeValue,
     Textarea,
-    Select
+    Select,
+    useToast,
+    Progress
   } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from "axios";
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export const AddProduct= () => {
+  const [isUpload,setIsUpload]= useState(false);
+  const toast= useToast();
+  const {token}= useSelector((store)=>store.auth);
+  const Navigate= useNavigate();
     const [productData,setProductData]= useState({
         title: "",
         description: "",
@@ -23,13 +32,54 @@ export const AddProduct= () => {
         category: ""
     });
 
-    const handleChange= (e) =>{
-        const {name,value}= e.target;
-        setProductData({...productData, [name]:value});
+    useEffect(()=>{
+      if(!token) Navigate("/login");
+    },[]);
+
+    const handleChange= (e) => {
+      const {value, name, type,files}= e.target;
+      if(type!=="file"){
+        setProductData({...productData,[name]:value});
+      }
+      else{
+        setIsUpload(true);
+        const picData = new FormData();
+        picData.append("file", files[0]);
+        picData.append("upload_preset", "diagonAlley");
+    axios.post(process.env.REACT_APP_IMAGE_URL, picData)
+      .then((res) => {
+        setProductData({...productData,[name]:res.data.url});
+      })
+      .catch((e)=>{
+        toast({
+          title: e.response.data.error.message,
+          status: "error",
+          position: "top",
+          isClosable: true,
+        });
+      })
+      .finally(()=>{
+        setIsUpload(false);
+      });
     }
+  }
 
     const handleSubmit= () => {
-        console.log(productData);
+      axios.post(`${process.env.REACT_APP_BASE_URL}/product`,productData,{ headers: {
+        Authorization: 'Bearer ' + token 
+      }}).then((res)=>{
+        Navigate("/sellerDashboard");
+    })
+    .catch((e)=>{
+      e.response.data.errors.map((el)=>(
+        toast({
+          title: el.msg,
+          status: "error",
+          position: "top",
+          isClosable: true,
+        })
+      ))
+    })
     }
 
     return (
@@ -60,7 +110,8 @@ export const AddProduct= () => {
             </FormControl>
             <FormControl isRequired >
               <FormLabel>Product Image</FormLabel>
-              <Input type="file" name="image" onChange={handleChange} />
+              <Input type="file" name="image" onChange={handleChange} disabled={isUpload} />
+              {isUpload && <Progress size='xs' isIndeterminate />}
             </FormControl>
               <Stack>
               <HStack>
@@ -88,7 +139,7 @@ export const AddProduct= () => {
                 color={'white'}
                 _hover={{
                   bg: 'blue.500',
-                }} onClick={handleSubmit} >
+                }} onClick={handleSubmit} disabled={isUpload} >
                 Submit
               </Button>
             </Stack>

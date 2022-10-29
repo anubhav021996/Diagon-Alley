@@ -157,8 +157,8 @@ export const User= () => {
             <FormControl id="photo" isRequired>
               <FormLabel>Profile Photo</FormLabel>
               <Input type="file" name="avatar" onChange={handleChange} disabled={isUpload} />
+              {isUpload && <Progress size='xs' isIndeterminate />}
             </FormControl>
-            {isUpload && <Progress size='xs' isIndeterminate />}
             <Stack spacing={10} pt={2}>
               <Button
                 loadingText="Submitting"
