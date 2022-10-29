@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Stack, Text, Button } from '@chakra-ui/react';
+import { Stack, Text, Button, Heading, Box } from '@chakra-ui/react';
 
 export const Address= () => {
     const {token}= useSelector((store)=>store.auth);
@@ -44,6 +44,12 @@ export const Address= () => {
 
     return (
       <>
+      <Stack align={'center'} p="4" >
+          <Heading fontSize={'2xl'} textAlign={'center'}>
+            My Addresses
+          </Heading>
+        </Stack>
+        <Box ml={10} mr={10}>
       {address?.map((e,i)=>(
         <Stack p="4" boxShadow="lg" m="4" borderRadius="sm" key={i} direction={{ base: 'column', md: 'row' }}>
           <Stack>
@@ -72,6 +78,7 @@ export const Address= () => {
         </Stack>
       </Stack>
       ))}
+      </Box>
       <Button onClick={()=>Navigate("/addAddress")}>Add new address</Button>
       </>
     );

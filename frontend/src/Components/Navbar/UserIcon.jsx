@@ -19,7 +19,7 @@ export const UserIcon= ({logout}) => {
                 />
               </MenuButton>
               <MenuList>
-                <MenuItem>Profile</MenuItem>
+              <Link to="/profile"><MenuItem>Profile</MenuItem></Link>
                 <MenuItem>My Orders</MenuItem>
                 <Link to="/address"><MenuItem>My Addresses</MenuItem></Link>
                 {user?.type==="seller" ? <Link to="/sellerDashboard"><MenuItem>Seller Dashboard</MenuItem></Link> : <Link to="/seller"><MenuItem>Become a seller</MenuItem></Link>}

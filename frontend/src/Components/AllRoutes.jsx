@@ -11,6 +11,10 @@ import { AddAddress } from "../Pages/AddAddress";
 import { Address } from "../Pages/Address";
 import { UpdateAddress } from "../Pages/UpdateAddress";
 import { SellerDashboard } from "../Pages/SellerDashboard";
+import { EditProduct } from "../Pages/EditProduct";
+import { Profile } from "../Pages/Profile";
+import { EditProfile } from "../Pages/EditProfile";
+import { Product } from "../Pages/Product";
 
 export const AllRoutes= () => {
     return(
@@ -24,9 +28,13 @@ export const AllRoutes= () => {
             <Route path={"/seller"} element={<Seller />} />
             <Route path={"/sellerDashboard"} element={<SellerDashboard />} />
             <Route path={"/addProduct"} element={<AddProduct />} />
+            <Route path={"/editProduct"} element={<EditProduct />} />
             <Route path={"/addAddress"} element={<AddAddress />} />
             <Route path={"/updateAddress"} element={<UpdateAddress />} />
             <Route path={"/address"} element={<Address />} />
+            <Route path={"/profile"} element={<Profile />} />
+            <Route path={"/editProfile"} element={<EditProfile />} />
+            <Route path={"/product"} element={<Product />} />
         </Routes>
     )
 }
