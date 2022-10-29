@@ -12,9 +12,9 @@ import {
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-export const AddAddress= () => {
+export const UpdateAddress= () => {
     const [addressForm,setAddressForm]= useState({
         addLine1: "",
         addLine2: "",
@@ -25,6 +25,7 @@ export const AddAddress= () => {
     });
     const {token}= useSelector((store)=>store.auth);
     const [address,setAddress]= useState([]);
+    const {state:{index}}= useLocation();
     const Navigate= useNavigate();
     
     useEffect(()=>{
@@ -32,6 +33,15 @@ export const AddAddress= () => {
         axios.get(`${process.env.REACT_APP_BASE_URL}/address`,{ headers: {
             Authorization: 'Bearer ' + token 
           }}).then((res)=>{
+            let oldAddress= res.data.address[index].split(",");
+            setAddressForm({
+                addLine1: oldAddress[0],
+                addLine2: oldAddress[1],
+                city: oldAddress[2],
+                state: oldAddress[3],
+                pincode: oldAddress[4],
+                phone: oldAddress[5]
+            })
             setAddress(res.data)
           })
           .catch((e)=>{
@@ -47,7 +57,7 @@ export const AddAddress= () => {
     const handleSubmit= () => {
         let finalAddress= `${addressForm.addLine1},${addressForm.addLine2},${addressForm.city},${addressForm.state},${addressForm.pincode},${addressForm.phone}`;
         let addArr= address.address;
-        addArr.push(finalAddress);
+        addArr[index]=finalAddress;
         axios.patch(`${process.env.REACT_APP_BASE_URL}/address/${address._id}`,{address:addArr},{ headers: {
           Authorization: 'Bearer ' + token 
         }}).then((res)=>{
@@ -74,25 +84,25 @@ export const AddAddress= () => {
             p={6}
             my={12}>
             <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-              Add Address
+              Update Address
             </Heading>
             <FormControl isRequired>
               <FormLabel>Address Line 1</FormLabel>
-              <Input type="text" name="addLine1" onChange={handleChange} />
+              <Input type="text" name="addLine1" value={addressForm.addLine1} onChange={handleChange} />
             </FormControl>
             <FormControl isRequired>
               <FormLabel>Address Line 2</FormLabel>
-              <Input type="text" name="addLine2" onChange={handleChange} /> 
+              <Input type="text" name="addLine2" value={addressForm.addLine2} onChange={handleChange} /> 
             </FormControl>
               <Stack>
               <HStack>
               <FormControl isRequired>
               <FormLabel>City/District</FormLabel>
-              <Input type="text" name="city" onChange={handleChange} />
+              <Input type="text" name="city" value={addressForm.city} onChange={handleChange} />
               </FormControl>
               <FormControl isRequired>
               <FormLabel>State</FormLabel>
-              <Input type="text" name="state" onChange={handleChange} />
+              <Input type="text" name="state" value={addressForm.state} onChange={handleChange} />
             </FormControl>
             </HStack>
             </Stack>
@@ -100,11 +110,11 @@ export const AddAddress= () => {
               <HStack>
               <FormControl isRequired>
               <FormLabel>Pincode</FormLabel>
-              <Input type="number" name="pincode" onChange={handleChange} />
+              <Input type="number" name="pincode" value={addressForm.pincode} onChange={handleChange} />
               </FormControl>
               <FormControl isRequired>
               <FormLabel>Phone Number</FormLabel>
-              <Input type="number" name="phone" onChange={handleChange} />
+              <Input type="number" name="phone" value={addressForm.phone} onChange={handleChange} />
             </FormControl>
             </HStack>
             </Stack>

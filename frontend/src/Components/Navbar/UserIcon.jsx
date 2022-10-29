@@ -22,7 +22,7 @@ export const UserIcon= ({logout}) => {
                 <MenuItem>Profile</MenuItem>
                 <MenuItem>My Orders</MenuItem>
                 <Link to="/address"><MenuItem>My Addresses</MenuItem></Link>
-                <MenuItem>Become a seller</MenuItem>
+                <Link to="/seller"><MenuItem>Become a seller</MenuItem></Link>
                 <MenuDivider />
                 <MenuItem onClick={logout}>Sign out</MenuItem>
               </MenuList>
