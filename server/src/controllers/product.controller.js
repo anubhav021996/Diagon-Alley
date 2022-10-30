@@ -58,7 +58,7 @@ router.get("",async(req,res)=>{
         let size= req.query.size || await Product.find().countDocuments();
         const totalPages= Math.ceil((await Product.find().countDocuments())/size);
 
-        const product= await Product.find().skip((page-1)*size).limit(size).lean().exec();
+        const product= await Product.find().populate("user_id",{businessName:1}).skip((page-1)*size).limit(size).lean().exec();
 
         res.status(200).send({product,totalPages});
     }
@@ -73,7 +73,7 @@ router.get("/category/:cat",async(req,res)=>{
         let size= req.query.size || await Product.find().countDocuments();
         const totalPages= Math.ceil((await Product.find().countDocuments())/size);
 
-        const product= await Product.find({category:req.params.cat}).skip((page-1)*size).limit(size).lean().exec();
+        const product= await Product.find({category:req.params.cat}).populate("user_id",{businessName:1}).skip((page-1)*size).limit(size).lean().exec();
 
         res.status(200).send({product,totalPages});
     }
@@ -100,7 +100,7 @@ router.get("/seller",authentication,async(req,res)=>{
 
 router.get("/:id",async(req,res)=>{
     try{
-        const product= await Product.findById(req.params.id).lean().exec();
+        const product= await Product.findById(req.params.id).populate("user_id",{businessName:1}).lean().exec();
         res.status(200).send(product);
     }
     catch(e){
