@@ -15,6 +15,7 @@ import { EditProduct } from "../Pages/EditProduct";
 import { Profile } from "../Pages/Profile";
 import { EditProfile } from "../Pages/EditProfile";
 import { Product } from "../Pages/Product";
+import { Cart } from "../Pages/Cart";
 
 export const AllRoutes= () => {
     return(
@@ -35,6 +36,7 @@ export const AllRoutes= () => {
             <Route path={"/profile"} element={<Profile />} />
             <Route path={"/editProfile"} element={<EditProfile />} />
             <Route path={"/product"} element={<Product />} />
+            <Route path={"/cart"} element={<Cart />} />
         </Routes>
     )
 }

@@ -19,18 +19,21 @@ import { Login } from './Login';
 import { addToken, addUser } from '../../Redux/Login/actionLogin';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { addId, addItem } from '../../Redux/Cart/actionCart';
 
 const navItems = ['Departments', 'Collections', 'Characters'];
 
 export const Navbar= () => {
   const Dispatch= useDispatch();
-  const {token}= useSelector((store)=>store.auth);
+  const {auth:{token},cart}= useSelector((store)=>store);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const Navigate= useNavigate();
 
   const handleLogout= () => {
     Dispatch(addToken(null));
     Dispatch(addUser(null));
+    Dispatch(addItem([]));
+    Dispatch(addId(null));
     localStorage.removeItem("token");
   }
 
@@ -43,8 +46,14 @@ export const Navbar= () => {
       }}).then((res)=>{
         Dispatch(addUser(res.data));
       })
+      axios.get(`${process.env.REACT_APP_BASE_URL}/cart`,{ headers: {
+        Authorization: 'Bearer ' + token 
+      }}).then((res)=>{
+        Dispatch(addId(res.data._id));
+        Dispatch(addItem(res.data.product_id));
+      })
     }
-  },[]);
+  },[token]);
 
   return (
     <>
@@ -70,7 +79,7 @@ export const Navbar= () => {
           </HStack>
           <Flex alignItems={'center'}>
             <Box mr={10} className={styles.cart} cursor={"pointer"}>
-              <Box className={styles.count}>8</Box>
+              <Box className={styles.count} onClick={()=>Navigate("/cart")} >{cart.total}</Box>
               <Image src="./cart.png" className={styles.icon}/>
             </Box>
             {token ? <UserIcon logout={handleLogout}/> : <Login login={()=> Navigate("/login")} />}
