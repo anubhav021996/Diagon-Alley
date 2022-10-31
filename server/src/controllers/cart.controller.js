@@ -51,7 +51,7 @@ router.delete("/:id",authentication,cartAuthorization,async(req,res)=>{
 router.get("",authentication,async(req,res)=>{
     try{
         const id= req.user._id;
-        const cart= await Cart.findOne({user_id:id}).lean().exec();
+        const cart= await Cart.findOne({user_id:id}).populate("product_id").lean().exec();
         res.status(200).send(cart);
     }
     catch(e){

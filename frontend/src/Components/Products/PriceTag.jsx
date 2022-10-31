@@ -1,6 +1,6 @@
 import { HStack, Text } from '@chakra-ui/react'
 
-const formatPrice= (value,currency) => {
+export const formatPrice= (value,currency) => {
 const locale = 'en-US';
   const formatter = new Intl.NumberFormat(locale, {
     currency,

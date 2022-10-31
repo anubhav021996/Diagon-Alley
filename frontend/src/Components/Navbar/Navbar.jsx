@@ -79,7 +79,7 @@ export const Navbar= () => {
           </HStack>
           <Flex alignItems={'center'}>
             <Box mr={10} className={styles.cart} cursor={"pointer"}>
-              <Box className={styles.count} onClick={()=>Navigate("/cart")} >{cart.total}</Box>
+              <Box className={styles.count} onClick={()=>Navigate("/cart")} >{cart.items.length}</Box>
               <Image src="./cart.png" className={styles.icon}/>
             </Box>
             {token ? <UserIcon logout={handleLogout}/> : <Login login={()=> Navigate("/login")} />}

@@ -2,9 +2,8 @@ import { ADDID, ADDITEM } from "./actionCart";
 
 const initialState={
     id: null,
-    items: {},
+    items: [],
     product_id: [],
-    total: 0
 }
 
 export const cartReducer= (state=initialState,{type,payload}) => {
@@ -12,9 +11,24 @@ export const cartReducer= (state=initialState,{type,payload}) => {
         case ADDITEM:
             let obj={};
             for(let i=0;i<payload.length;i++){
-                obj[payload[i]] ? obj[payload[i]]++ : obj[payload[i]]=1;
+                if(obj[payload[i]._id]) obj[payload[i]._id].count++;
+                else{
+                    obj[payload[i]._id]= {
+                        category: payload[i].category,
+                        description: payload[i].description,
+                        image: payload[i].image,
+                        price: payload[i].price,
+                        quantity: payload[i].quantity,
+                        title: payload[i].title,
+                        id: payload[i]._id,
+                        count: 1,
+                    };
+                    obj[payload[i]._id].count=1;
+                }
             }
-            return {...state, items: obj, product_id: payload, total: Object.keys(obj).length};
+            let arr= [];
+            for(let key in obj) arr.push(obj[key]);
+            return {...state, items: arr, product_id: payload};
         case ADDID:
             return {...state, id: payload}
         default:
