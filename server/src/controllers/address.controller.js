@@ -1,6 +1,5 @@
 const express= require("express");
 const router= express.Router();
-const {body, validationResult}= require("express-validator");
 
 const Address= require("../models/address.model");
 const authentication= require("../middlewares/authentication.middleware");
@@ -20,16 +19,8 @@ router.post("",authentication,async(req,res)=>{
     }
 });
 
-router.patch("/:id",
-body("address").notEmpty().withMessage("Address required"),
-authentication,addressAuthorization,async(req,res)=>{
+router.patch("/:id",authentication,addressAuthorization,async(req,res)=>{
     try{
-        const errors= validationResult(req);
-        if(!errors.isEmpty()){
-            let newErrors= errors.array().map((el)=>({key:el.param, msg: el.msg}));
-            return res.status(400).send({errors: newErrors});
-        }
-
         const address= await Address.findByIdAndUpdate(req.params.id,req.body,{new:true});
         res.status(200).send(address);
     }

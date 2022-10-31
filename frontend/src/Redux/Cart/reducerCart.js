@@ -4,6 +4,7 @@ const initialState={
     id: null,
     items: [],
     product_id: [],
+    obj: {},
 }
 
 export const cartReducer= (state=initialState,{type,payload}) => {
@@ -28,7 +29,10 @@ export const cartReducer= (state=initialState,{type,payload}) => {
             }
             let arr= [];
             for(let key in obj) arr.push(obj[key]);
-            return {...state, items: arr, product_id: payload};
+            arr.sort((a,b)=>{
+                return a.title<b.title ? -1 : a.title>b.title ? 1 : 0;
+            });
+            return {...state, items: arr, obj: obj, product_id: payload};
         case ADDID:
             return {...state, id: payload}
         default:

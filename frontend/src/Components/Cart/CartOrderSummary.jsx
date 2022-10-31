@@ -10,6 +10,8 @@ import {
   import * as React from 'react'
   import { FaArrowRight } from 'react-icons/fa'
   import { formatPrice } from '../Products/PriceTag'
+  import { useSelector } from "react-redux";
+import { useEffect } from 'react';
   
   const OrderSummaryItem = (props) => {
     const { label, value, children } = props
@@ -24,20 +26,27 @@ import {
   }
   
   export const CartOrderSummary = () => {
+    const {items}= useSelector((store)=>store.cart);
+    const [total,setTotal]= React.useState();
+
+    useEffect(()=>{
+      let t=0;
+      items.map((e)=>(
+        t+= e.count*e.price
+    ));
+      setTotal(t);
+    },[items]);
+
     return (
       <Stack spacing="8" borderWidth="1px" rounded="lg" padding="8" width="full">
         <Heading size="md">Order Summary</Heading>
   
         <Stack spacing="6">
-          <OrderSummaryItem label="Subtotal" value={formatPrice(597,"USD")} />
-          <OrderSummaryItem label="Shipping + Tax">
+          <OrderSummaryItem label="Subtotal" value={formatPrice(total,"INR")} />
+          <OrderSummaryItem label="Tax" value={formatPrice(total*0.18,"INR")} />
+          <OrderSummaryItem label="Shipping Charges">
             <Link href="#" textDecor="underline">
-              Calculate shipping
-            </Link>
-          </OrderSummaryItem>
-          <OrderSummaryItem label="Coupon Code">
-            <Link href="#" textDecor="underline">
-              Add coupon code
+              Free Shipping
             </Link>
           </OrderSummaryItem>
           <Flex justify="space-between">
@@ -45,7 +54,7 @@ import {
               Total
             </Text>
             <Text fontSize="xl" fontWeight="extrabold">
-              {formatPrice(597,"USD")}
+              {formatPrice(total+(total*0.18),"INR")}
             </Text>
           </Flex>
         </Stack>

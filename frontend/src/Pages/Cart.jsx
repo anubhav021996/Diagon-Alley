@@ -20,7 +20,7 @@ import { CartOrderSummary } from '../Components/Cart/CartOrderSummary'
 
     useEffect(()=>{
         if(!token) return Navigate("/login");
-    },[]);
+    },[token]);
 
     return (
     <Box
