@@ -12,10 +12,9 @@ import {
     Box,
     useToast
   } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import { useSelector } from 'react-redux';
 
 export const Signup= () => {
     const Navigate= useNavigate();
@@ -23,7 +22,6 @@ export const Signup= () => {
     const[reqOtp,setReqOtp]= useState(false);
     const[sentOtp,setSentOtp]= useState(false);
     const[otpRec,setOtpRec]= useState(false);
-    const {token}= useSelector((store)=>store.auth);
     const[otp,setOtp]= useState({
       otp1:"",
       otp2:"",
@@ -31,10 +29,6 @@ export const Signup= () => {
       otp4:"",
     });
     const toast= useToast();
-
-    useEffect(()=>{
-      if(token) Navigate("/");
-    },[token]);
 
     const handleChange= (e) => {
       const {value,name}= e.target;
@@ -56,14 +50,14 @@ export const Signup= () => {
             setReqOtp(false);
             if(e.response.data.errors){
               let err= e.response.data.errors;
-              err.map(({msg})=>{
+              err.map(({msg})=>(
                 toast({
                   title: msg,
                   status: "error",
                   position: "top",
                   isClosable: true,
-                });
-              })
+                })
+              ))
             }
             else{
               toast({
@@ -86,14 +80,14 @@ export const Signup= () => {
             setSentOtp(false);
             if(e.response.data.errors){
               let err= e.response.data.errors;
-              err.map(({msg})=>{
+              err.map(({msg})=>(
                 toast({
                   title: msg,
                   status: "error",
                   position: "top",
                   isClosable: true,
-                });
-              })
+                })
+              ))
             }
             else{
               toast({

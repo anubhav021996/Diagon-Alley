@@ -13,7 +13,7 @@ import {
     useToast,
     Progress
   } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from "axios";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -31,10 +31,6 @@ export const AddProduct= () => {
         quantity: "",
         category: ""
     });
-
-    useEffect(()=>{
-      if(!token) Navigate("/login");
-    },[]);
 
     const handleChange= (e) => {
       const {value, name, type,files}= e.target;

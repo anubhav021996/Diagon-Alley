@@ -81,7 +81,7 @@ export const CartItem = (props) => {
         justify="space-between"
         display={{ base: 'flex', md: 'none' }}
       >
-        <Link fontSize="sm" textDecor="underline">
+        <Link fontSize="sm" textDecor="underline" onClick={handleDelete} >
           Delete
         </Link>
         <NumberInput size='sm' maxW={20} defaultValue={count} min={1} max={5}>

@@ -15,27 +15,19 @@ import {
     useToast
   } from '@chakra-ui/react';
 import axios from 'axios';
-import { useEffect } from 'react';
 import { useState } from 'react';
   import { FcGoogle } from 'react-icons/fc';
-import { useDispatch, useSelector } from 'react-redux';
-  import {Link as ReachLink, useNavigate} from "react-router-dom";
+import { useDispatch } from 'react-redux';
+  import {Link as ReachLink} from "react-router-dom";
 import { addToken, addUser } from '../Redux/Login/actionLogin';
 
 export const Signin= () => {
   const toast= useToast();
-  const Navigate= useNavigate();
   const Dispatch= useDispatch();
-  const {token}= useSelector((store)=>store.auth);
   const [loginData, setLoginData]= useState({
     email: "",
     password: ""
   });
-
-  useEffect(()=>{
-    if(token) Navigate("/");
-  },[token]);
-  
 
   const handleChange= (e) => {
       const{value,name}= e.target;
@@ -51,14 +43,14 @@ export const Signin= () => {
     .catch((e)=>{
       if(e.response.data.errors){
         let err= e.response.data.errors;
-        err.map(({msg})=>{
+        err.map(({msg})=>(
           toast({
             title: msg,
             status: "error",
             position: "top",
             isClosable: true,
-          });
-        })
+          })
+        ))
       }
       else{
         toast({

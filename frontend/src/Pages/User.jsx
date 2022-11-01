@@ -20,7 +20,7 @@ import {
   import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
   import { useLocation, Link as ReachLink, useNavigate } from 'react-router-dom';
   import axios from "axios";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addToken, addUser } from '../Redux/Login/actionLogin';
 
 export const User= () => {
@@ -37,12 +37,9 @@ export const User= () => {
     avatar: ""
   });
 
-  const {token}= useSelector((store)=>store.auth);
-
     useEffect(()=>{
-      if(token) Navigate("/");
       if(!state) Navigate("/login");
-    },[token]);
+    },[]);
 
   const handleChange= (e) => {
       const {value, name, type,files}= e.target;
@@ -83,14 +80,14 @@ export const User= () => {
       .catch((e)=>{
         if(e.response.data.errors){
           let err= e.response.data.errors;
-          err.map(({msg})=>{
+          err.map(({msg})=>(
             toast({
               title: msg,
               status: "error",
               position: "top",
               isClosable: true,
-            });
-          })
+            })
+          ))
         }
         else{
           toast({

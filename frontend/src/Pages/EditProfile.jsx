@@ -32,13 +32,12 @@ export const EditProfile= () => {
   const {token,user}= useSelector((store)=>store.auth);
 
     useEffect(()=>{
-      if(!token) Navigate("/");
       setFormData({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        avatar: user.avatar
+        firstName: user?.firstName,
+        lastName: user?.lastName,
+        avatar: user?.avatar
       })
-    },[token]);
+    },[]);
 
   const handleChange= (e) => {
       const {value, name, type,files}= e.target;
@@ -78,14 +77,14 @@ export const EditProfile= () => {
       .catch((e)=>{
         if(e.response.data.errors){
           let err= e.response.data.errors;
-          err.map(({msg})=>{
+          err.map(({msg})=>(
             toast({
               title: msg,
               status: "error",
               position: "top",
               isClosable: true,
-            });
-          })
+            })
+          ))
         }
         else{
           toast({

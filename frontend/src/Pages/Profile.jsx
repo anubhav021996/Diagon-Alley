@@ -9,17 +9,12 @@ import {
     Badge,
     useColorModeValue,
   } from '@chakra-ui/react';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
   
   export const Profile= () => {
     const Navigate= useNavigate();
     const {user}= useSelector((store)=>store.auth);
-
-    useEffect(()=>{
-        if(!user) Navigate("/");
-    },[user]);
 
     return (
       <Center py={6} mt={5}>

@@ -27,12 +27,8 @@ export const SellerDashboard= () => {
     }
 
     useEffect(()=>{
-        if(!token){
-            Navigate("/");
-            return;
-        } 
         getProducts();
-    },[token]);
+    },[]);
 
     const deleteProduct= (id) => {
       axios.delete(`${process.env.REACT_APP_BASE_URL}/product/${id}`,{ headers: {

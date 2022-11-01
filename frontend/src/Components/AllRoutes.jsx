@@ -16,27 +16,28 @@ import { Profile } from "../Pages/Profile";
 import { EditProfile } from "../Pages/EditProfile";
 import { Product } from "../Pages/Product";
 import { Cart } from "../Pages/Cart";
+import { PrivateRoutes, SellerPrivateRoute, TokenPrivateRoutes } from "./PrivateRoutes";
 
 export const AllRoutes= () => {
     return(
         <Routes>
             <Route path={"/"} element={<Home />} />
-            <Route path={"/login"} element={<Signin />} />
-            <Route path={"/signup"} element={<Signup />} />
-            <Route path={"/user"} element={<User />} />
-            <Route path={"/forgetPassword"} element={<ForgetPassword />} />
-            <Route path={"/resetPassword"} element={<ResetPassword />} />
-            <Route path={"/seller"} element={<Seller />} />
-            <Route path={"/sellerDashboard"} element={<SellerDashboard />} />
-            <Route path={"/addProduct"} element={<AddProduct />} />
-            <Route path={"/editProduct"} element={<EditProduct />} />
-            <Route path={"/addAddress"} element={<AddAddress />} />
-            <Route path={"/updateAddress"} element={<UpdateAddress />} />
-            <Route path={"/address"} element={<Address />} />
-            <Route path={"/profile"} element={<Profile />} />
-            <Route path={"/editProfile"} element={<EditProfile />} />
+            <Route path={"/login"} element={<TokenPrivateRoutes><Signin /></TokenPrivateRoutes>} />
+            <Route path={"/signup"} element={<TokenPrivateRoutes><Signup /></TokenPrivateRoutes>} />
+            <Route path={"/user"} element={<TokenPrivateRoutes><User /></TokenPrivateRoutes>} />
+            <Route path={"/forgetPassword"} element={<TokenPrivateRoutes><ForgetPassword /></TokenPrivateRoutes>} />
+            <Route path={"/resetPassword"} element={<TokenPrivateRoutes><ResetPassword /></TokenPrivateRoutes>} />
+            <Route path={"/seller"} element={<PrivateRoutes><Seller /></PrivateRoutes>} />
+            <Route path={"/sellerDashboard"} element={<PrivateRoutes><SellerPrivateRoute><SellerDashboard /></SellerPrivateRoute></PrivateRoutes>} />
+            <Route path={"/addProduct"} element={<PrivateRoutes><SellerPrivateRoute><AddProduct /></SellerPrivateRoute></PrivateRoutes>} />
+            <Route path={"/editProduct"} element={<PrivateRoutes><SellerPrivateRoute><EditProduct /></SellerPrivateRoute></PrivateRoutes>} />
+            <Route path={"/addAddress"} element={<PrivateRoutes><AddAddress /></PrivateRoutes>} />
+            <Route path={"/updateAddress"} element={<PrivateRoutes><UpdateAddress /></PrivateRoutes>} />
+            <Route path={"/address"} element={<PrivateRoutes><Address /></PrivateRoutes>} />
+            <Route path={"/profile"} element={<PrivateRoutes><Profile /></PrivateRoutes>} />
+            <Route path={"/editProfile"} element={<PrivateRoutes><EditProfile /></PrivateRoutes>} />
             <Route path={"/product"} element={<Product />} />
-            <Route path={"/cart"} element={<Cart />} />
+            <Route path={"/cart"} element={<PrivateRoutes><Cart /></PrivateRoutes>} />
         </Routes>
     )
 }

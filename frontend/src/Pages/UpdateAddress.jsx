@@ -29,14 +29,7 @@ export const UpdateAddress= () => {
     const Navigate= useNavigate();
     
     useEffect(()=>{
-      if(!state){
-        Navigate("/address");
-        return;
-      }
-      if(!token){
-        Navigate("/login");
-        return;
-      } 
+      if(!state) return Navigate("/address");
         axios.get(`${process.env.REACT_APP_BASE_URL}/address`,{ headers: {
             Authorization: 'Bearer ' + token 
           }}).then((res)=>{

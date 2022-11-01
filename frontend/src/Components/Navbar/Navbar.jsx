@@ -38,9 +38,7 @@ export const Navbar= () => {
   }
 
   useEffect(()=>{
-    const token= JSON.parse(localStorage.getItem("token"));
     if(token){
-      Dispatch(addToken(token));
       axios.get(`${process.env.REACT_APP_BASE_URL}/user`,{ headers: {
         Authorization: 'Bearer ' + token 
       }}).then((res)=>{

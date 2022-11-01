@@ -11,7 +11,6 @@ import {
     useToast,
   } from '@chakra-ui/react';
 import axios from 'axios';
-import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -35,10 +34,6 @@ export const Seller= () => {
     const {token}= useSelector((store)=>store.auth);
     const toast= useToast();
     const Navigate= useNavigate();
-
-    useEffect(()=>{
-      if(!token) Navigate("/login");
-    },[]);
 
     const handleChange= (e) =>{
         const {name,value}= e.target;

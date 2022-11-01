@@ -1,7 +1,7 @@
 import { ADDTOKEN, ADDUSER } from "./actionLogin";
 
 const initialState={
-    token:null,
+    token: JSON.parse(localStorage.getItem("token")) || null,
     user:null
 }
 

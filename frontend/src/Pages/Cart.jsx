@@ -8,19 +8,12 @@ import {
     useColorModeValue as mode,
   } from '@chakra-ui/react'
   import * as React from 'react'
-import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { CartItem } from '../Components/Cart/CartItem'
 import { CartOrderSummary } from '../Components/Cart/CartOrderSummary'
   
   export const Cart = () => {
-    const {auth:{token}, cart:{items}}= useSelector((store)=>store);
-    const Navigate= useNavigate();
-
-    useEffect(()=>{
-        if(!token) return Navigate("/login");
-    },[token]);
+    const {items}= useSelector((store)=>store.cart);
 
     return (
     <Box

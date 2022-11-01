@@ -35,8 +35,7 @@ export const EditProduct= () => {
     });
 
     useEffect(()=>{
-        if(!state) Navigate("/sellerDashboard");
-      if(!token) Navigate("/login");
+        if(!state) return Navigate("/sellerDashboard");
       setProductData({
         title: state.product.title,
         description: state.product.description,
