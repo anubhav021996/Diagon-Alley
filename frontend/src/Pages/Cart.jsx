@@ -8,12 +8,16 @@ import {
     useColorModeValue as mode,
   } from '@chakra-ui/react'
   import * as React from 'react'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { AddressItem } from '../Components/Cart/AddressItem'
 import { CartItem } from '../Components/Cart/CartItem'
 import { CartOrderSummary } from '../Components/Cart/CartOrderSummary'
   
   export const Cart = () => {
     const {items}= useSelector((store)=>store.cart);
+    const [address,setAddress]= useState(false);
+    const [checkout,setCheckout]= useState(false);
 
     return (
     <Box
@@ -31,16 +35,15 @@ import { CartOrderSummary } from '../Components/Cart/CartOrderSummary'
           <Heading fontSize="2xl" fontWeight="extrabold">
             Shopping Cart ({items.length} items)
           </Heading>
-  
-          <Stack spacing="6">
+        {address ? <AddressItem setCheckout= {setCheckout} /> : <Stack spacing="6">
             {items.map((item) => (
               <CartItem key={item.id} {...item} />
             ))}
-          </Stack>
+          </Stack>}
         </Stack>
   
         <Flex direction="column" align="center" flex="1">
-          <CartOrderSummary />
+          <CartOrderSummary setAddress={setAddress} address={address} checkout={checkout} />
           <HStack mt="6" fontWeight="semibold">
             <p>or</p>
             <Link color={mode('blue.500', 'blue.200')}>Continue shopping</Link>

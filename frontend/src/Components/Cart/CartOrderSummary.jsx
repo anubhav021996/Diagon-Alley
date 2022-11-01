@@ -25,7 +25,7 @@ import { useEffect } from 'react';
     )
   }
   
-  export const CartOrderSummary = () => {
+  export const CartOrderSummary = ({setAddress,address,checkout}) => {
     const {items}= useSelector((store)=>store.cart);
     const [total,setTotal]= React.useState();
 
@@ -44,6 +44,7 @@ import { useEffect } from 'react';
         <Stack spacing="6">
           <OrderSummaryItem label="Subtotal" value={formatPrice(total,"INR")} />
           <OrderSummaryItem label="Tax" value={formatPrice(total*0.18,"INR")} />
+          <OrderSummaryItem label="Discount">-{formatPrice(total*0.10,"INR")}</OrderSummaryItem>
           <OrderSummaryItem label="Shipping Charges">
             <Link href="#" textDecor="underline">
               Free Shipping
@@ -54,13 +55,15 @@ import { useEffect } from 'react';
               Total
             </Text>
             <Text fontSize="xl" fontWeight="extrabold">
-              {formatPrice(total+(total*0.18),"INR")}
+              {formatPrice(total+(total*0.18)-(total*0.10),"INR")}
             </Text>
           </Flex>
         </Stack>
-        <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />}>
+        {checkout ? <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />}>
           Checkout
-        </Button>
+        </Button> : <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />} disabled={address} onClick={()=>setAddress(true)}>
+          Proceed to Checkout
+        </Button>}
       </Stack>
     )
   }

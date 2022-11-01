@@ -8,6 +8,7 @@ import {
     Input,
     Stack,
     useColorModeValue,
+    useToast,
   } from '@chakra-ui/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -15,6 +16,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 export const AddAddress= () => {
+  const toast= useToast();
     const [addressForm,setAddressForm]= useState({
         addLine1: "",
         addLine2: "",
@@ -44,7 +46,15 @@ export const AddAddress= () => {
     }
 
     const handleSubmit= () => {
-        let finalAddress= `${addressForm.addLine1},${addressForm.addLine2},${addressForm.city},${addressForm.state},${addressForm.pincode},${addressForm.phone}`;
+      if(!addressForm.addLine1 || !addressForm.addLine2 || !addressForm.city || !addressForm.state || !addressForm.pincode || !addressForm.phone){
+        return toast({
+          title: "All fields are required",
+          status: "error",
+          position: "top",
+          isClosable: true,
+        });
+      }
+        let finalAddress= ` ${addressForm.addLine1}, ${addressForm.addLine2}, ${addressForm.city}, ${addressForm.state}, ${addressForm.pincode}, ${addressForm.phone}`;
         let addArr= address.address;
         addArr.push(finalAddress);
         axios.patch(`${process.env.REACT_APP_BASE_URL}/address/${address._id}`,{address:addArr},{ headers: {
