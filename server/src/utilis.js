@@ -74,7 +74,7 @@ const adminSellerMail = async (user) => {
         from: `Diagon Alley ${process.env.user}`,
         to: "anubhav.varshney02nov@gmail.com",
         subject: `${user.firstName} is now seller`,
-        text: `Please welcome ${user.firstName} to the team.`
+        text: `Please welcome ${user.firstName} ${user.lastName} to the team.`
     });
 }
 
@@ -100,13 +100,24 @@ const orderMail = async (user,products) => {
     }
 }
 
+const orderMailAdmin = async (user,products) => {
+    for(let key in products){
+        await sendMail({
+            from: `Diagon Alley ${process.env.user}`,
+            to: "anubhav.varshney02nov@gmail.com", 
+            subject: `Order Placed by ${user.firstName}`,
+            text: `${user.firstName} ${user.lastName} purchased ${key}`
+        });
+    }
+}
+
 const adminMail = async (user) => {
     await sendMail({
         from: `Diagon Alley ${process.env.user}`,
         to: "anubhav.varshney02nov@gmail.com",
         subject: `${user.firstName} has registered with us`,
-        text: `Please welcome ${user.firstName}.`
+        text: `Please welcome ${user.firstName} ${user.lastName}.`
     });
 }
 
-module.exports = {verifyOtp, welcomeMail, adminMail, resetMail, orderMail,sellerMail,adminSellerMail};
+module.exports = {verifyOtp, welcomeMail, adminMail, resetMail, orderMail, sellerMail, adminSellerMail, orderMailAdmin};

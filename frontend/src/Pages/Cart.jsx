@@ -10,6 +10,7 @@ import {
   import * as React from 'react'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { Link as ReachLink } from "react-router-dom";
 import { AddressItem } from '../Components/Cart/AddressItem'
 import { CartItem } from '../Components/Cart/CartItem'
 import { CartOrderSummary } from '../Components/Cart/CartOrderSummary'
@@ -46,7 +47,7 @@ import { CartOrderSummary } from '../Components/Cart/CartOrderSummary'
           <CartOrderSummary setAddress={setAddress} address={address} checkout={checkout} />
           <HStack mt="6" fontWeight="semibold">
             <p>or</p>
-            <Link color={mode('blue.500', 'blue.200')}>Continue shopping</Link>
+            <Link as={ReachLink} color={mode('blue.500', 'blue.200')} to="/" >Continue shopping</Link>
           </HStack>
         </Flex>
       </Stack>

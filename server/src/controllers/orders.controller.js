@@ -1,12 +1,13 @@
 const express= require("express");
 const router= express.Router();
-const {body, validationResult}= require("express-validator");
+const shortid = require("shortid");
+const Razorpay = require("razorpay");
 
 const Orders= require("../models/orders.model");
 const Products= require("../models/product.model");
 const authentication= require("../middlewares/authentication.middleware");
 const ordersAuthorization= require("../middlewares/ordersAuthorization.middleware");
-const { orderMail } = require("../utilis");
+const { orderMail, orderMailAdmin } = require("../utilis");
 
 router.post("",authentication,async(req,res)=>{
     try{
@@ -22,6 +23,29 @@ router.post("",authentication,async(req,res)=>{
     }
 });
 
+const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_ID,
+    key_secret: process.env.RAZORPAY_SECRET,
+  });
+  
+  router.post("/razorpay", async (req, res) => {
+    const payment_capture = 1;
+    const amount = Number(req.body.amount);
+    const options = {
+      amount: amount * 100,
+      currency: "INR",
+      receipt: shortid.generate(),
+      payment_capture,
+    };
+    const response = await razorpay.orders.create(options);
+  
+    return res.json({
+      id: response.id,
+      currency: "INR",
+      amount: response.amount,
+    });
+  });
+
 router.patch("/:id",authentication,ordersAuthorization,async(req,res)=>{
     try{        
         const oldOrders= await Orders.findById(req.params.id);
@@ -36,6 +60,7 @@ router.patch("/:id",authentication,ordersAuthorization,async(req,res)=>{
             else obj[product.title]= 1;
         }
         orderMail(req.user,obj);
+        orderMailAdmin(req.user,obj);
         
         res.status(200).send(newOrders);
     }
