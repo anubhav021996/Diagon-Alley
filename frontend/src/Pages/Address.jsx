@@ -45,33 +45,19 @@ export const Address= () => {
             My Addresses
           </Heading>
         </Stack>
-        <Box ml={10} mr={10}>
+        <Box ml={10} mr={10} display="flex" flexDirection={["column", "row"]} >
       {address?.map((e,i)=>(
-        <Stack p="4" boxShadow="lg" m="4" borderRadius="sm" key={i} direction={{ base: 'column', md: 'row' }}>
-          <Stack>
-        <Stack direction="row" alignItems="center">
+        <Stack p="4" boxShadow="lg" m="4" borderRadius="sm" key={i} minW={"300px"} textAlign={'center'} >
           <Text fontWeight="semibold">{e[0]},</Text>
-        </Stack>
-        <Stack direction="row" alignItems="center">
           <Text fontWeight="semibold">{e[1]},</Text>
-        </Stack>
-        <Stack direction="row" alignItems="center">
           <Text fontWeight="semibold">{e[2]},</Text>
           <Text fontWeight="semibold">{e[3]}</Text>
-        </Stack>
-        <Stack direction="row" alignItems="center">
           <Text fontWeight="semibold">Pincode: {e[4]}</Text>
-        </Stack>
-        <Stack direction="row" alignItems="center">
           <Text fontWeight="semibold">Mobile: {e[5]}</Text>
-        </Stack>
-        </Stack>
-        <Stack>
-        <Button variant="outline" colorScheme="green" onClick={()=>Navigate("/updateAddress",{state:{index:i}})}>
+        <Button width={"100%"} variant="outline" colorScheme="green" onClick={()=>Navigate("/updateAddress",{state:{index:i}})}>
               Update Address
             </Button>
-            <Button colorScheme="green" onClick={()=>deleteAdd(i)}>Delete Address</Button>
-        </Stack>
+            <Button width={"100%"} colorScheme="green" onClick={()=>deleteAdd(i)}>Delete Address</Button>
       </Stack>
       ))}
       </Box>
