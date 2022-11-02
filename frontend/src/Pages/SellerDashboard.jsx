@@ -6,8 +6,8 @@ import {useNavigate} from "react-router-dom";
 import {
   Heading,
   Stack,
-  Grid,
   Button,
+  HStack,
 } from '@chakra-ui/react';
 import { SellerCard } from "../Components/SellerCard";
 import { useState } from "react";
@@ -45,11 +45,11 @@ export const SellerDashboard= () => {
             Seller Dashboard
           </Heading>
     </Stack>
-    <Grid templateColumns='repeat(2, 1fr)' gap={6} ml={20} mt={5} mb={5}>
+    <HStack justifyContent={"space-around"} flexWrap={"wrap"} mb={5} mt={5} rowGap={10} >
     {products.map((e)=>(
       <SellerCard key={e._id} product={e} deleteProduct={deleteProduct} />
     ))}
-      </Grid>
+    </HStack>
       <Button onClick={()=>Navigate("/addProduct")}>Add Product</Button>
     </>
 }
