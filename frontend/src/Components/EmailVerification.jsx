@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Heading, Input, Link, Modal, ModalCloseButton, ModalContent, ModalOverlay, PinInput, PinInputField, Stack, Text, useColorModeValue, useDisclosure, useToast } from "@chakra-ui/react"
+import { Button, FormControl, Heading, HStack, Input, Link, Modal, ModalCloseButton, ModalContent, ModalOverlay, PinInput, PinInputField, Stack, Text, useColorModeValue, useDisclosure, useToast } from "@chakra-ui/react"
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ export const EmailVerification= () => {
     const[reqOtp,setReqOtp]= useState(false);
     const[sentOtp,setSentOtp]= useState(false);
     const[otpRec,setOtpRec]= useState(false);
-    const[time,setTime]= useState(5);
+    const[time,setTime]= useState(10);
     const[resend,setResend]= useState(false);
     const[otp,setOtp]= useState({
       otp1:"",
@@ -167,25 +167,19 @@ export const EmailVerification= () => {
                 Request OTP
               </Button>
             {otpRec && <Stack>
-            <Box>
-                <PinInput otp minW={"100%"} >
+              <br />
+            <HStack>
+                <PinInput otp >
                     <PinInputField name="otp1" onChange={handleChange}/>
                     <PinInputField name="otp2" onChange={handleChange}/>
                     <PinInputField name="otp3" onChange={handleChange}/>
                     <PinInputField name="otp4" onChange={handleChange}/>
                 </PinInput>
-            </Box>
-            <Box display="flex" justifyContent="space-evenly" minW={"xl"} pt={2} >
-              <Button
-                bg={'blue.400'}
-                color={'white'}
-                _hover={{
-                  bg: 'blue.500',
-                }}
-                onClick={sendOtp} disabled={sentOtp || !resend}
-                 >
-                {resend ? "Resend OTP" : `Resend Otp in ${time} sec`}
-              </Button>
+            </HStack>
+
+              {resend ? <Link onClick={sendOtp} color={'blue.400'} fontSize={'sm'} >Resend OTP</Link> : 
+              <Text color={'blue.400'} fontSize={'sm'} >{`Resend OTP in ${time} sec`}</Text>}
+              
               <Button
                 bg={'blue.400'}
                 color={'white'}
@@ -195,7 +189,6 @@ export const EmailVerification= () => {
                  onClick={verifyOtp} disabled={sentOtp} >
                 Verify OTP
               </Button>
-            </Box>
             </Stack>}
           </Stack>
           </ModalContent>
