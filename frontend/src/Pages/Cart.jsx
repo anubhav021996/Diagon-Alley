@@ -18,7 +18,7 @@ import { CartOrderSummary } from '../Components/Cart/CartOrderSummary'
   export const Cart = () => {
     const {items}= useSelector((store)=>store.cart);
     const [address,setAddress]= useState(false);
-    const [checkout,setCheckout]= useState(false);
+    const [checkout,setCheckout]= useState("");
 
     return (
     <Box

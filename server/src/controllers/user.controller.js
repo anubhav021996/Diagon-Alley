@@ -8,7 +8,6 @@ const Authentication= require("../middlewares/authentication.middleware");
 const User= require("../models/user.model");
 const Address= require("../models/address.model");
 const Cart= require("../models/cart.model");
-const Orders= require("../models/orders.model");
 
 const { welcomeMail, adminMail, resetMail, sellerMail, adminSellerMail } = require("../utilis");
 
@@ -55,7 +54,6 @@ router.post("",
         user= await User.create(req.body);
         const address= await Address.create({user_id:user._id});
         const cart= await Cart.create({user_id:user._id});
-        const orders= await Orders.create({user_id:user._id});
 
         const token= newToken(user);
 

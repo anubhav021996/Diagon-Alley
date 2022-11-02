@@ -1,4 +1,4 @@
-import { Box, Button, Heading } from "@chakra-ui/react"
+import { Box, Button, Heading, Text } from "@chakra-ui/react"
 import { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom"
 
@@ -20,6 +20,7 @@ export const PaymentSuccess= () => {
           <Heading>
             Order placed successfully
           </Heading>
+          <Text><b>Order Id: {state.id}</b></Text>
 
           <Link to="/">
             <Button variant="contained" textDecoration={"underline"}>

@@ -79,21 +79,18 @@ import { addItem } from '../../Redux/Cart/actionCart';
         image: "./logo.png",
   
         handler: async function (response) {
-          await axios
-            .get(
-              `${process.env.REACT_APP_BASE_URL}/orders`,{ headers: {
+          await axios.post(
+            `${process.env.REACT_APP_BASE_URL}/orders`,{
+              product_id:product_id, 
+              address: checkout,
+              paymentId: response.razorpay_payment_id,
+              orderId: response.razorpay_order_id,
+            },{ headers: {
                 Authorization: 'Bearer ' + token 
               }})
-            .then((res) => {
-              axios
-            .patch(
-              `${process.env.REACT_APP_BASE_URL}/orders/${res.data._id}`,{product_id:product_id},{ headers: {
-                Authorization: 'Bearer ' + token 
-              }})
-            .then((res) => {
-
-            });
-            });
+              .then((res) => {
+                console.log(res);
+              });
             
             axios.patch(`${process.env.REACT_APP_BASE_URL}/cart/${id}`,{product_id:[]},{ headers: {
               Authorization: 'Bearer ' + token 

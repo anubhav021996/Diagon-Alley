@@ -12,10 +12,19 @@ const { orderMail, orderMailAdmin } = require("../utilis");
 router.post("",authentication,async(req,res)=>{
     try{
         req.body.user_id= req.user._id;
-        let orders= await Orders.findOne({user_id:req.user._id});
-        if(orders) return res.status(400).send("Orders already exists");
 
-        orders= await Orders.create(req.body);
+        let orders= await Orders.create(req.body);
+
+        let obj={};
+        for(let i=0;i<orders.product_id.length;i++){
+            let id= orders.product_id[i];
+            let product= await Products.findById(id);
+            await Products.findByIdAndUpdate(id,{quantity:product.quantity-1},{new:true});
+            product.title in obj ? obj[product.title]++ : obj[product.title]= 1;
+        }
+        orderMail(req.user,obj);
+        orderMailAdmin(req.user,obj);
+
         res.status(200).send(orders);
     }
     catch(e){
@@ -46,29 +55,6 @@ const razorpay = new Razorpay({
     });
   });
 
-router.patch("/:id",authentication,ordersAuthorization,async(req,res)=>{
-    try{        
-        const oldOrders= await Orders.findById(req.params.id);
-        const newOrders= await Orders.findByIdAndUpdate(req.params.id,req.body,{new:true});
-
-        let obj={};
-        for(let i=oldOrders.product_id.length;i<newOrders.product_id.length;i++){
-            let id= newOrders.product_id[i];
-            let product= await Products.findById(id);
-            await Products.findByIdAndUpdate(id,{quantity:product.quantity-1},{new:true});
-            if(product.title in obj) obj[product.title]++;
-            else obj[product.title]= 1;
-        }
-        orderMail(req.user,obj);
-        orderMailAdmin(req.user,obj);
-        
-        res.status(200).send(newOrders);
-    }
-    catch(e){
-        res.status(500).send(e.message);
-    }
-});
-
 router.delete("/:id",authentication,ordersAuthorization,async(req,res)=>{
     try{
         const orders= await Orders.findByIdAndDelete(req.params.id);
@@ -82,7 +68,7 @@ router.delete("/:id",authentication,ordersAuthorization,async(req,res)=>{
 router.get("",authentication,async(req,res)=>{
     try{
         const id= req.user._id;
-        const orders= await Orders.findOne({user_id:id}).lean().exec();
+        const orders= await Orders.find({user_id:id}).populate("product_id").lean().exec();
         res.status(200).send(orders);
     }
     catch(e){

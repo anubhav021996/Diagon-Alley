@@ -78,7 +78,7 @@ export const AddressItem= ({setCheckout}) => {
       }
 
       const handleChange= (e) => {
-        setCheckout(true);
+        setCheckout(e);
       }
 
       const { getRootProps, getRadioProps } = useRadioGroup({
