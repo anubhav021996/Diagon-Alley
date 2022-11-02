@@ -1,9 +1,7 @@
 import {Routes, Route} from "react-router-dom";
 import { Home } from "../Pages/Home";
 import { Signin } from "../Pages/Signin";
-import { Signup } from "../Pages/Signup";
 import { User } from "../Pages/User";
-import { ForgetPassword } from "../Pages/ForgetPassword";
 import { ResetPassword } from "../Pages/ResetPassword";
 import { Seller } from "../Pages/Seller";
 import { AddProduct } from "../Pages/AddProduct";
@@ -24,9 +22,7 @@ export const AllRoutes= () => {
         <Routes>
             <Route path={"/"} element={<Home />} />
             <Route path={"/login"} element={<TokenPrivateRoutes><Signin /></TokenPrivateRoutes>} />
-            <Route path={"/signup"} element={<TokenPrivateRoutes><Signup /></TokenPrivateRoutes>} />
             <Route path={"/user"} element={<TokenPrivateRoutes><User /></TokenPrivateRoutes>} />
-            <Route path={"/forgetPassword"} element={<TokenPrivateRoutes><ForgetPassword /></TokenPrivateRoutes>} />
             <Route path={"/resetPassword"} element={<TokenPrivateRoutes><ResetPassword /></TokenPrivateRoutes>} />
             <Route path={"/seller"} element={<PrivateRoutes><Seller /></PrivateRoutes>} />
             <Route path={"/sellerDashboard"} element={<PrivateRoutes><SellerPrivateRoute><SellerDashboard /></SellerPrivateRoute></PrivateRoutes>} />

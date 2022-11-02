@@ -6,19 +6,16 @@ import {
     Input,
     Checkbox,
     Stack,
-    Link,
     Button,
     Heading,
     useColorModeValue,
-    Center,
-    Text,
     useToast
   } from '@chakra-ui/react';
 import axios from 'axios';
 import { useState } from 'react';
-  import { FcGoogle } from 'react-icons/fc';
 import { useDispatch } from 'react-redux';
-  import {Link as ReachLink} from "react-router-dom";
+import { EmailVerification } from '../Components/EmailVerification';
+import { ForgetPasswordVerification } from '../Components/ForgetPasswordVerification';
 import { addToken, addUser } from '../Redux/Login/actionLogin';
 
 export const Signin= () => {
@@ -65,7 +62,6 @@ export const Signin= () => {
 
     return (
         <Flex
-        //  minH={'100vh'}
           align={'center'}
           justify={'center'}
           bg={useColorModeValue('gray.50', 'gray.800')}>
@@ -95,7 +91,7 @@ export const Signin= () => {
                     align={'start'}
                     justify={'space-between'}>
                     <Checkbox>Remember me</Checkbox>
-                    <Link as={ReachLink} to="/forgetPassword" color={'blue.400'}>Forgot password?</Link>
+                    <ForgetPasswordVerification />
                   </Stack>
                   <Button
                     bg={'blue.400'}
@@ -106,22 +102,8 @@ export const Signin= () => {
                     >
                     Sign in
                   </Button>
-                  <Button
-                    w={'full'}
-                    maxW={'md'}
-                    variant={'outline'}
-                    as={ReachLink}
-                    leftIcon={<FcGoogle />}
-                    // onClick={()=>window.location.href="http://localhost:2548/auth/google"}
-                  >
-                    <Center>
-                      <Text>Sign in with Google</Text>
-                    </Center>
-                  </Button>
                 </Stack>
-                <Link as={ReachLink} to="/signup" color={'blue.400'} fontSize={'md'} >
-                Create a new account
-              </Link>
+                <EmailVerification />
               </Stack>
             </Box>
           </Stack>
