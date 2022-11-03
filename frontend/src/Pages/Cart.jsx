@@ -36,7 +36,7 @@ import { CartOrderSummary } from '../Components/Cart/CartOrderSummary'
           <Heading fontSize="2xl" fontWeight="extrabold">
             Shopping Cart ({items.length} items)
           </Heading>
-        {address ? <AddressItem setCheckout= {setCheckout} /> : <Stack spacing="6">
+        {address ? <AddressItem setCheckout= {setCheckout} setAddress={setAddress} /> : <Stack spacing="6">
             {items.map((item) => (
               <CartItem key={item.id} {...item} />
             ))}

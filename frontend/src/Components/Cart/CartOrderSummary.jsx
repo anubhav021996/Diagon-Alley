@@ -102,7 +102,6 @@ import { addItem } from '../../Redux/Cart/actionCart';
               })
             })
 
-          // Navigate(`/order-success/${response.razorpay_order_id}`);
           Navigate("/paymentSuccess",{state:{id:response.razorpay_order_id}});
         },
         theme: {
@@ -138,8 +137,8 @@ import { addItem } from '../../Redux/Cart/actionCart';
         </Stack>
         {checkout ? <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />} onClick={handleCheckout} >
           Checkout
-        </Button> : <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />} disabled={!items.length || address} onClick={()=>setAddress(true)}>
-          Proceed to Checkout
+        </Button> : <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={!address && <FaArrowRight />} disabled={!items.length || address} onClick={()=>setAddress(true)}>
+          {address ? "Please select delivery address" : "Proceed to Checkout"}
         </Button>}
       </Stack>
     )

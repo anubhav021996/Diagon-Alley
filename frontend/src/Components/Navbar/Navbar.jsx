@@ -66,7 +66,7 @@ export const Navbar= () => {
           />
           <HStack spacing={300} alignItems={'center'}>
             <Box onClick={()=>Navigate("/")} cursor="pointer">
-            <Image src="./logo.png" h={50} alt="logo" />
+            <Image src="./logo.png" h={50} alt="logo" width={"80%"} minW={{md:"200px"}} />
             </Box>
             <HStack
               as={'nav'}
@@ -80,7 +80,9 @@ export const Navbar= () => {
               <Box className={styles.count} onClick={()=>Navigate("/cart")} >{cart.items.length}</Box>
               <Image src="./cart.png" className={styles.icon}/>
             </Box>
+            <Box mr={{md: 5, lg:0}}>
             {token ? <UserIcon logout={handleLogout}/> : <Login login={()=> Navigate("/login")} />}
+            </Box>
           </Flex>
         </Flex>
 
