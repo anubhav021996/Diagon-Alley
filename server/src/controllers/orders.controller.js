@@ -38,21 +38,26 @@ const razorpay = new Razorpay({
   });
   
   router.post("/razorpay", async (req, res) => {
-    const payment_capture = 1;
-    const amount = Number(req.body.amount);
-    const options = {
-      amount: amount * 100,
-      currency: "INR",
-      receipt: shortid.generate(),
-      payment_capture,
-    };
-    const response = await razorpay.orders.create(options);
+    try{
+        const payment_capture = 1;
+        const amount = Number(req.body.amount);
+        const options = {
+            amount: amount * 100,
+            currency: "INR",
+            receipt: shortid.generate(),
+            payment_capture,
+        };
+        const response = await razorpay.orders.create(options);
   
-    return res.json({
+    res.json({
       id: response.id,
       currency: "INR",
       amount: response.amount,
     });
+    }
+    catch(e){
+        res.status(500).send(e.message);
+    }
   });
 
 router.delete("/:id",authentication,ordersAuthorization,async(req,res)=>{

@@ -6,6 +6,7 @@ import {
     Stack,
     Text,
     useColorModeValue as mode,
+    useToast,
   } from '@chakra-ui/react'
   import * as React from 'react'
   import { FaArrowRight } from 'react-icons/fa'
@@ -33,6 +34,7 @@ import { addItem } from '../../Redux/Cart/actionCart';
     const Navigate= useNavigate();
     const {cart:{items,product_id,id},auth:{token}}= useSelector((store)=>store);
     const [total,setTotal]= React.useState();
+    const toast= useToast();
 
     useEffect(()=>{
       let t=0;
@@ -56,8 +58,20 @@ import { addItem } from '../../Redux/Cart/actionCart';
         };
       });
     };
+
+    const handleCheckout= () => {
+      for(let i=0;i<items.length;i++){
+        if(items[i].count>items[i].quantity) return toast({
+          title: `Sorry! we only have stock of ${items[i].quantity} nos for ${items[i].title}.Please reduce the quantity to checkout.`,
+          status: "info",
+          position: "top",
+          isClosable: true,
+        })
+      }
+      setAddress(true);
+    }
     
-    const handleCheckout = async () => {
+    const handlePayment = async () => {
       const res = await loadRazorpay();
       if (!res) {
         alert("Load failed");
@@ -65,7 +79,7 @@ import { addItem } from '../../Redux/Cart/actionCart';
   
       const data = await axios
         .post(`${process.env.REACT_APP_BASE_URL}/orders/razorpay`, {
-          amount: total+(total*0.18)-(total*0.10),
+          amount: Math.round(total+(total*0.18)-(total*0.10)),
         })
         .then((res) => res.data);
   
@@ -89,7 +103,7 @@ import { addItem } from '../../Redux/Cart/actionCart';
                 Authorization: 'Bearer ' + token 
               }})
               .then((res) => {
-                console.log(res);
+                // console.log(res);
               });
             
             axios.patch(`${process.env.REACT_APP_BASE_URL}/cart/${id}`,{product_id:[]},{ headers: {
@@ -126,18 +140,19 @@ import { addItem } from '../../Redux/Cart/actionCart';
               Free Shipping
             </Link>
           </OrderSummaryItem>
+          <OrderSummaryItem label="Round-off">{formatPrice(total+(total*0.18)-(total*0.10)-Math.round(total+(total*0.18)-(total*0.10)),"INR")}</OrderSummaryItem>
           <Flex justify="space-between">
             <Text fontSize="lg" fontWeight="semibold">
               Total
             </Text>
             <Text fontSize="xl" fontWeight="extrabold">
-              {formatPrice(total+(total*0.18)-(total*0.10),"INR")}
+              {formatPrice(Math.round(total+(total*0.18)-(total*0.10)),"INR")}
             </Text>
           </Flex>
         </Stack>
-        {checkout ? <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />} onClick={handleCheckout} >
-          Checkout
-        </Button> : <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={!address && <FaArrowRight />} disabled={!items.length || address} onClick={()=>setAddress(true)}>
+        {checkout ? <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />} onClick={handlePayment} >
+          Proceed to Payment
+        </Button> : <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={!address && <FaArrowRight />} disabled={!items.length || address} onClick={handleCheckout}>
           {address ? "Please select delivery address" : "Proceed to Checkout"}
         </Button>}
       </Stack>

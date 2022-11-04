@@ -52,6 +52,12 @@ export const Seller= () => {
         axios.patch(`${process.env.REACT_APP_BASE_URL}/user/seller`,sellerData,{ headers: {
           Authorization: 'Bearer ' + token 
         }}).then((res)=>{
+          toast({
+            title: "Congratulations! You are now seller with us.",
+            status: "success",
+            position: "top",
+            isClosable: true,
+          })
           Navigate("/");
       })
       .catch((e)=>{

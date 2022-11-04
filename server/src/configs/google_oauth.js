@@ -6,7 +6,6 @@ const {v4: uuidv4}= require("uuid");
 const User= require("../models/user.model");
 const Address= require("../models/address.model");
 const Cart= require("../models/cart.model");
-const Orders= require("../models/orders.model");
 
 const { welcomeMail, adminMail } = require('../utilis');
 
@@ -31,7 +30,6 @@ passport.use(new GoogleStrategy({
 
         const address= await Address.create({user_id:user._id});
         const cart= await Cart.create({user_id:user._id});
-        const orders= await Orders.create({user_id:user._id});
         
         welcomeMail(user);
         adminMail(user);
