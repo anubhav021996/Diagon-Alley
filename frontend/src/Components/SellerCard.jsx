@@ -9,6 +9,7 @@ import {
     useColorModeValue,
   } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import { formatPrice } from './Products/PriceTag';
 
 export const SellerCard= ({product, deleteProduct}) => {
     const Navigate= useNavigate();
@@ -56,7 +57,7 @@ export const SellerCard= ({product, deleteProduct}) => {
               py={1}
               bg={useColorModeValue('gray.50', 'gray.800')}
               fontWeight={'400'}>
-              $ {product.price}
+              {formatPrice(product.price,"INR")}
             </Badge>
             <Badge
               px={2}

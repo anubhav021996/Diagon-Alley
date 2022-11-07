@@ -99,6 +99,7 @@ import { addItem } from '../../Redux/Cart/actionCart';
               address: checkout,
               paymentId: response.razorpay_payment_id,
               orderId: response.razorpay_order_id,
+              amount:Math.round(total+(total*0.18)-(total*0.10)),
             },{ headers: {
                 Authorization: 'Bearer ' + token 
               }})
