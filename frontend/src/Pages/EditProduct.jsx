@@ -138,9 +138,9 @@ export const EditProduct= () => {
             <FormControl isRequired>
               <FormLabel>Category</FormLabel>
               <Select placeholder='Select category' name="category" onChange={handleChange} value={productData.category} >
-                <option value='option1'>Option 1</option>
-                <option value='option2'>Option 2</option>
-                <option value='option3'>Option 3</option>
+                <option value="Ollivander's Wands">Ollivander's Wands</option>
+                <option value="Weasleys' Wheezes">Weasleys' Wheezes</option>
+                <option value="Sweet Trolley">Sweet Trolley</option>
             </Select>
             </FormControl>
             <Stack spacing={6}>

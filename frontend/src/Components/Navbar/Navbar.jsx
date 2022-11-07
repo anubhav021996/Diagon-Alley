@@ -7,9 +7,9 @@ import {
   useColorModeValue,
   Stack,
   Image,
+  Text,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import { PopOver } from './PopOver';
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { UserIcon } from './UserIcon';
@@ -20,7 +20,7 @@ import axios from 'axios';
 import { addId, addItem } from '../../Redux/Cart/actionCart';
 import { CartModal } from '../Cart/CartModal';
 
-const navItems = ['Departments', 'Collections', 'Characters'];
+const navItems = ["Goblet of Products", "Ollivander's Wands", "Weasleys' Wheezes", "Sweet Trolley"];
 
 export const Navbar= () => {
   const Dispatch= useDispatch();
@@ -60,18 +60,28 @@ export const Navbar= () => {
             size={'md'}
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label={'Open Menu'}
-            display={{ md: 'none' }}
+            display={{ lg: 'none' }}
             onClick={isOpen ? onClose : onOpen}
           />
-          <HStack spacing={300} alignItems={'center'}>
+          <HStack spacing={150} alignItems={'center'}>
             <Box onClick={()=>Navigate("/")} cursor="pointer">
             <Image src="./logo.png" h={50} alt="logo" width={"80%"} minW={{md:"200px"}} />
             </Box>
             <HStack
               as={'nav'}
-              spacing={4}
-              display={{ base: 'none', md: 'flex' }}>
-              {navItems.map((item) => (<PopOver key={item} item={item} trigger={"hover"} />))}
+              spacing={10}
+              display={{ base: 'none', lg: 'flex' }}>
+              {navItems.map((item) => (
+              <Text key={item} 
+              fontWeight={500}
+              cursor={"pointer"}
+              _hover={{
+                color:"rgb(25,118,210)",
+                borderBottom:"1px solid rgb(25,118,210)",
+                pb:"2"
+              }}
+              >{item}
+              </Text>))}
             </HStack>
           </HStack>
           <Flex alignItems={'center'}>
@@ -83,11 +93,9 @@ export const Navbar= () => {
         </Flex>
 
         {isOpen ? (
-          <Box pb={4} display={{ md: 'none' }}>
+          <Box p={4} display={{ lg: 'none' }}>
             <Stack as={'nav'} spacing={4}>
-              {navItems.map((item) => (
-                <PopOver key={item} item={item} trigger={"click"} />
-              ))}
+              {navItems.map((item) => (<Text key={item} >{item}</Text>))}
             </Stack>
           </Box>
         ) : null}
