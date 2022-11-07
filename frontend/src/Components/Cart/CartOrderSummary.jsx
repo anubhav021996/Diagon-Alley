@@ -29,7 +29,7 @@ import { addItem } from '../../Redux/Cart/actionCart';
     )
   }
   
-  export const CartOrderSummary = ({setAddress,address,checkout}) => {
+  export const CartOrderSummary = ({setAddress,address,checkout,close}) => {
     const Dispatch= useDispatch();
     const Navigate= useNavigate();
     const {cart:{items,product_id,id},auth:{token}}= useSelector((store)=>store);
@@ -72,6 +72,7 @@ import { addItem } from '../../Redux/Cart/actionCart';
     }
     
     const handlePayment = async () => {
+      close();
       const res = await loadRazorpay();
       if (!res) {
         alert("Load failed");

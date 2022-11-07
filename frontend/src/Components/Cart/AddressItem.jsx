@@ -5,7 +5,7 @@ import { useRadio, Box, useRadioGroup, HStack, Stack, Text, Button } from '@chak
 import { useNavigate } from "react-router-dom";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 
-export const AddressItem= ({setCheckout,setAddress}) => {
+export const AddressItem= ({setCheckout,setAddress,close}) => {
     const {token}= useSelector((store)=>store.auth);
     const [options,setOptions]= useState(null);
     const Navigate= useNavigate();
@@ -57,7 +57,7 @@ export const AddressItem= ({setCheckout,setAddress}) => {
           <Box as='label'>
             <input {...input} />
             <Box
-            width={350}
+            width={300}
               {...checkbox}
               cursor='pointer'
               borderWidth='1px'
@@ -110,7 +110,10 @@ export const AddressItem= ({setCheckout,setAddress}) => {
         )
       })}
       </HStack>
-      <Button onClick={()=>Navigate("/addAddress")}>Add new address</Button>
+      <Button onClick={()=>{
+        Navigate("/addAddress");
+        close();
+      }}>Add new address</Button>
       </>
     );
 }

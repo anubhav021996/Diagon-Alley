@@ -13,7 +13,6 @@ import { EditProduct } from "../Pages/EditProduct";
 import { Profile } from "../Pages/Profile";
 import { EditProfile } from "../Pages/EditProfile";
 import { Product } from "../Pages/Product";
-import { Cart } from "../Pages/Cart";
 import { PrivateRoutes, SellerPrivateRoute, TokenPrivateRoutes } from "./PrivateRoutes";
 import { PaymentSuccess } from "../Pages/PaymentSuccess";
 import { Orders } from "../Pages/Orders";
@@ -35,7 +34,6 @@ export const AllRoutes= () => {
             <Route path={"/profile"} element={<PrivateRoutes><Profile /></PrivateRoutes>} />
             <Route path={"/editProfile"} element={<PrivateRoutes><EditProfile /></PrivateRoutes>} />
             <Route path={"/product"} element={<Product />} />
-            <Route path={"/cart"} element={<PrivateRoutes><Cart /></PrivateRoutes>} />
             <Route path={"/paymentSuccess"} element={<PrivateRoutes><PaymentSuccess /></PrivateRoutes>} />
             <Route path={"/orders"} element={<PrivateRoutes><Orders /></PrivateRoutes>} />
         </Routes>

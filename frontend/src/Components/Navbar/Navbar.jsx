@@ -10,8 +10,6 @@ import {
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { PopOver } from './PopOver';
-
-import styles from "./Cart.module.css";
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { UserIcon } from './UserIcon';
@@ -20,12 +18,13 @@ import { addToken, addUser } from '../../Redux/Login/actionLogin';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { addId, addItem } from '../../Redux/Cart/actionCart';
+import { CartModal } from '../Cart/CartModal';
 
 const navItems = ['Departments', 'Collections', 'Characters'];
 
 export const Navbar= () => {
   const Dispatch= useDispatch();
-  const {auth:{token},cart}= useSelector((store)=>store);
+  const {token}= useSelector((store)=>store.auth);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const Navigate= useNavigate();
 
@@ -76,10 +75,7 @@ export const Navbar= () => {
             </HStack>
           </HStack>
           <Flex alignItems={'center'}>
-            <Box mr={10} className={styles.cart} cursor={"pointer"}>
-              <Box className={styles.count} onClick={()=>Navigate("/cart")} >{cart.items.length}</Box>
-              <Image src="./cart.png" className={styles.icon}/>
-            </Box>
+            <CartModal />
             <Box mr={{md: 5, lg:0}}>
             {token ? <UserIcon logout={handleLogout}/> : <Login login={()=> Navigate("/login")} />}
             </Box>
