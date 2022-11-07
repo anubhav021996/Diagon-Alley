@@ -80,6 +80,7 @@ export const Navbar= () => {
                 borderBottom:"1px solid rgb(25,118,210)",
                 pb:"2"
               }}
+              onClick={()=>Navigate("/product",{state:{cat:item}})}
               >{item}
               </Text>))}
             </HStack>
@@ -95,7 +96,7 @@ export const Navbar= () => {
         {isOpen ? (
           <Box p={4} display={{ lg: 'none' }}>
             <Stack as={'nav'} spacing={4}>
-              {navItems.map((item) => (<Text key={item} >{item}</Text>))}
+              {navItems.map((item) => (<Text key={item} fontWeight={500} onClick={()=>Navigate("/product",{state:{cat:item}})} >{item}</Text>))}
             </Stack>
           </Box>
         ) : null}
