@@ -13,10 +13,16 @@ export const CartModal= () => {
     const [checkout,setCheckout]= useState("");
     const {items}= useSelector((store)=>store.cart);
 
+    const openModal= () => {
+      setAddress(false);
+      setCheckout("");
+      onOpen();
+    }
+
     return (
       <>
         <Box mr={10} className={styles.cart} cursor={"pointer"}>
-              <Box className={styles.count} onClick={onOpen} >{items.length}</Box>
+              <Box className={styles.count} onClick={openModal} >{items.length}</Box>
               <Image src="./cart.png" className={styles.icon}/>
         </Box>
   
@@ -44,6 +50,7 @@ export const CartModal= () => {
           <Heading fontSize="2xl" fontWeight="extrabold">
             Shopping Cart ({items.length} items)
           </Heading>
+          {!items.length && <Image src="./emptyCart.png" />}
         {address ? <AddressItem setCheckout= {setCheckout} setAddress={setAddress} close={onClose} /> : <Stack spacing="6">
             {items.map((item) => (
               <CartItem key={item.id} {...item} />
