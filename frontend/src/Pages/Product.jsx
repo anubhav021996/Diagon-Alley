@@ -23,7 +23,7 @@ export const Product= () => {
     py={{ base: '6', md: '8', lg: '12' }}
   >
     <Stack direction={"row"} mb={10} justifyContent="space-between">
-    <Badge p={3} fontSize={"l"}>{cat}</Badge>
+    <Badge p={2} fontSize={"l"}>{cat}</Badge>
 <Select placeholder='Sort By' width={200}>
   <option value='option1'>Option 1</option>
   <option value='option2'>Option 2</option>
