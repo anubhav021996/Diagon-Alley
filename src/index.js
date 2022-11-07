@@ -56,10 +56,11 @@ app.get( '/auth/google/callback',
     return res.status(200).send({user,token});
 });
 
-app.listen(2548,async()=>{
+let port= process.env.PORT || 2548;
+app.listen(port,async()=>{
     try{
         await connect();
-        console.log("Listening to port no. 2548");
+        console.log("Listening");
     }
     catch(e){
         console.log(e.message);
