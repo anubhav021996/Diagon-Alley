@@ -38,18 +38,13 @@ export const SellerCard= ({product, deleteProduct}) => {
           justifyContent="center"
           alignItems="center"
           p={1}
+          gap={4}
           pt={2}>
           <Heading fontSize={'2xl'} fontFamily={'body'}>
             {product.title}
           </Heading>
           <Text fontWeight={600} color={'gray.500'} size="sm" mb={4}>
           {product.category}
-          </Text>
-          <Text
-            textAlign={'center'}
-            color={useColorModeValue('gray.700', 'gray.400')}
-            px={3}>
-            {product.description}
           </Text>
           <Stack justifyContent={'space-between'} direction={'row'} mt={6}>
             <Badge

@@ -44,12 +44,13 @@ export const SellerDashboard= () => {
           <Heading fontSize={'2xl'} textAlign={'center'}>
             Seller Dashboard
           </Heading>
+          <Button onClick={()=>Navigate("/addProduct")}>Add Product</Button>
     </Stack>
     <HStack justifyContent={"space-around"} flexWrap={"wrap"} mb={5} mt={5} rowGap={10} >
     {products.map((e)=>(
       <SellerCard key={e._id} product={e} deleteProduct={deleteProduct} />
     ))}
     </HStack>
-      <Button onClick={()=>Navigate("/addProduct")}>Add Product</Button>
+      {/* <Button onClick={()=>Navigate("/addProduct")}>Add Product</Button> */}
     </>
 }
