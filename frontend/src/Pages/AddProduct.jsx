@@ -47,7 +47,6 @@ export const AddProduct= () => {
         setProductData({...productData,[name]:res.data.url});
       })
       .catch((e)=>{
-        console.log(e);
         toast({
           title: e.response.data.error.message,
           status: "error",
@@ -68,6 +67,7 @@ export const AddProduct= () => {
         Navigate("/sellerDashboard");
     })
     .catch((e)=>{
+      console.log(e);
       e.response.data.errors.map((el)=>(
         toast({
           title: el.msg,
