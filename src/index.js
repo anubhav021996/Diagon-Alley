@@ -20,8 +20,8 @@ const otpController= require("./controllers/otp.controller");
 
 app.use(cors());
 
-const session = require('express-session');
-app.use(session({ secret: process.env.secret }));
+// const session = require('express-session');
+// app.use(session({ secret: process.env.secret }));
 
 app.use(express.json());
 
@@ -34,27 +34,27 @@ app.use("/orders",ordersController);
 app.use("/email",emailController);
 app.use("/otp",otpController);
 
-passport.serializeUser(function (user, done) {
-    done(null, user);
-});
+// passport.serializeUser(function (user, done) {
+//     done(null, user);
+// });
   
-passport.deserializeUser(function (user, done) {
-    done(null, user);
-});
+// passport.deserializeUser(function (user, done) {
+//     done(null, user);
+// });
 
-app.get('/auth/google',
-  passport.authenticate('google', { scope:
-      [ 'email', 'profile' ] }
-));
+// app.get('/auth/google',
+//   passport.authenticate('google', { scope:
+//       [ 'email', 'profile' ] }
+// ));
 
-app.get( '/auth/google/callback',
-    passport.authenticate( 'google', {
-        failureRedirect: '/auth/google/failure'
-}),(req,res)=>{
-    const {user}= req;
-    const token= newToken(user);
-    return res.status(200).send({user,token});
-});
+// app.get( '/auth/google/callback',
+//     passport.authenticate( 'google', {
+//         failureRedirect: '/auth/google/failure'
+// }),(req,res)=>{
+//     const {user}= req;
+//     const token= newToken(user);
+//     return res.status(200).send({user,token});
+// });
 
 let port= process.env.PORT || 2548;
 app.listen(port,async()=>{
