@@ -67,7 +67,6 @@ export const AddProduct= () => {
         Navigate("/sellerDashboard");
     })
     .catch((e)=>{
-      console.log(e);
       e.response.data.errors.map((el)=>(
         toast({
           title: el.msg,
