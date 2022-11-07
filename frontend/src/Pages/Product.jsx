@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
-import { Badge, Box, Heading, Select, Stack, Text } from '@chakra-ui/react'
+import { Badge, Box, Select, Stack } from '@chakra-ui/react'
 import { ProductGrid } from "../Components/Products/ProductGrid";
 import { ProductCard } from "../Components/Products/ProductCard";
 import { useLocation } from "react-router-dom";
