@@ -47,6 +47,7 @@ export const AddProduct= () => {
         setProductData({...productData,[name]:res.data.url});
       })
       .catch((e)=>{
+        console.log(e);
         toast({
           title: e.response.data.error.message,
           status: "error",
