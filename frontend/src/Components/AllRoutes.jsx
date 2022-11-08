@@ -16,6 +16,7 @@ import { Product } from "../Pages/Product";
 import { PrivateRoutes, SellerPrivateRoute, TokenPrivateRoutes } from "./PrivateRoutes";
 import { PaymentSuccess } from "../Pages/PaymentSuccess";
 import { Orders } from "../Pages/Orders";
+import { ProductDetails } from "../Pages/ProductDetails";
 
 export const AllRoutes= () => {
     return(
@@ -34,6 +35,7 @@ export const AllRoutes= () => {
             <Route path={"/profile"} element={<PrivateRoutes><Profile /></PrivateRoutes>} />
             <Route path={"/editProfile"} element={<PrivateRoutes><EditProfile /></PrivateRoutes>} />
             <Route path={"/product"} element={<Product />} />
+            <Route path={"/productDetails"} element={<ProductDetails />} />
             <Route path={"/paymentSuccess"} element={<PrivateRoutes><PaymentSuccess /></PrivateRoutes>} />
             <Route path={"/orders"} element={<PrivateRoutes><Orders /></PrivateRoutes>} />
         </Routes>

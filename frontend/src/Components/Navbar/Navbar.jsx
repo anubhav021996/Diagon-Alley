@@ -20,7 +20,10 @@ import axios from 'axios';
 import { addId, addItem } from '../../Redux/Cart/actionCart';
 import { CartModal } from '../Cart/CartModal';
 
-const navItems = ["Goblet of Products", "Ollivander's Wands", "Weasleys' Wheezes", "Sweet Trolley"];
+const navItems= [{name: "Goblet of Products", img: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/5346ef1f-ab44-49ca-b69c-d15c1d1c2582/dc30899-c5fd1b9e-29bf-4f59-b446-49e03f078734.jpg/v1/fill/w_980,h_330,q_75,strp/banner_ollivanders_by_mariannehemmings_dc30899-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzMwIiwicGF0aCI6IlwvZlwvNTM0NmVmMWYtYWI0NC00OWNhLWI2OWMtZDE1YzFkMWMyNTgyXC9kYzMwODk5LWM1ZmQxYjllLTI5YmYtNGY1OS1iNDQ2LTQ5ZTAzZjA3ODczNC5qcGciLCJ3aWR0aCI6Ijw9OTgwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.ARpkpoFaJ0raL4IxqPQkYzZ7ikG_i6Tao9Qmlg7rzkA"},
+{name: "Ollivander's Wands", img: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/5346ef1f-ab44-49ca-b69c-d15c1d1c2582/dc30899-c5fd1b9e-29bf-4f59-b446-49e03f078734.jpg/v1/fill/w_980,h_330,q_75,strp/banner_ollivanders_by_mariannehemmings_dc30899-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzMwIiwicGF0aCI6IlwvZlwvNTM0NmVmMWYtYWI0NC00OWNhLWI2OWMtZDE1YzFkMWMyNTgyXC9kYzMwODk5LWM1ZmQxYjllLTI5YmYtNGY1OS1iNDQ2LTQ5ZTAzZjA3ODczNC5qcGciLCJ3aWR0aCI6Ijw9OTgwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.ARpkpoFaJ0raL4IxqPQkYzZ7ikG_i6Tao9Qmlg7rzkA"},
+{name: "Weasleys' Wheezes", img: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/5346ef1f-ab44-49ca-b69c-d15c1d1c2582/dc30899-c5fd1b9e-29bf-4f59-b446-49e03f078734.jpg/v1/fill/w_980,h_330,q_75,strp/banner_ollivanders_by_mariannehemmings_dc30899-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzMwIiwicGF0aCI6IlwvZlwvNTM0NmVmMWYtYWI0NC00OWNhLWI2OWMtZDE1YzFkMWMyNTgyXC9kYzMwODk5LWM1ZmQxYjllLTI5YmYtNGY1OS1iNDQ2LTQ5ZTAzZjA3ODczNC5qcGciLCJ3aWR0aCI6Ijw9OTgwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.ARpkpoFaJ0raL4IxqPQkYzZ7ikG_i6Tao9Qmlg7rzkA"},
+{name: "Sweet Trolley", img: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/5346ef1f-ab44-49ca-b69c-d15c1d1c2582/dc30899-c5fd1b9e-29bf-4f59-b446-49e03f078734.jpg/v1/fill/w_980,h_330,q_75,strp/banner_ollivanders_by_mariannehemmings_dc30899-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzMwIiwicGF0aCI6IlwvZlwvNTM0NmVmMWYtYWI0NC00OWNhLWI2OWMtZDE1YzFkMWMyNTgyXC9kYzMwODk5LWM1ZmQxYjllLTI5YmYtNGY1OS1iNDQ2LTQ5ZTAzZjA3ODczNC5qcGciLCJ3aWR0aCI6Ijw9OTgwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.ARpkpoFaJ0raL4IxqPQkYzZ7ikG_i6Tao9Qmlg7rzkA"},]
 
 export const Navbar= () => {
   const Dispatch= useDispatch();
@@ -72,7 +75,7 @@ export const Navbar= () => {
               spacing={10}
               display={{ base: 'none', lg: 'flex' }}>
               {navItems.map((item) => (
-              <Text key={item} 
+              <Text key={item.name} 
               fontWeight={500}
               cursor={"pointer"}
               _hover={{
@@ -81,7 +84,7 @@ export const Navbar= () => {
                 pb:"2"
               }}
               onClick={()=>Navigate("/product",{state:{cat:item}})}
-              >{item}
+              >{item.name}
               </Text>))}
             </HStack>
           </HStack>
@@ -96,7 +99,10 @@ export const Navbar= () => {
         {isOpen ? (
           <Box p={4} display={{ lg: 'none' }}>
             <Stack as={'nav'} spacing={4}>
-              {navItems.map((item) => (<Text key={item} fontWeight={500} onClick={()=>Navigate("/product",{state:{cat:item}})} >{item}</Text>))}
+              {navItems.map((item) => (<Text key={item.name} fontWeight={500} onClick={()=>{
+                Navigate("/product",{state:{cat:item}});
+                onClose();
+              }} >{item.name}</Text>))}
             </Stack>
           </Box>
         ) : null}
