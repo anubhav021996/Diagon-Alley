@@ -20,7 +20,11 @@ export const Product= () => {
           totalPages.current= res.data.totalPages;
           setProducts(res.data.product);
         });
-    },[cat,page]);
+    },[page]);
+
+    useEffect(()=>{
+      setPage(1);
+    },[cat]);
 
     const handlePageChange= (p) => {
       setPage(p);

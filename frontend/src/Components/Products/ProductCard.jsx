@@ -74,7 +74,7 @@ import { PriceTag } from './PriceTag'
           </Stack>
           <HStack>
             <Text fontSize="sm" color={useColorModeValue('gray.600', 'gray.400')}>
-              {businessName}
+              Seller: {businessName}
             </Text>
           </HStack>
         </Stack>
