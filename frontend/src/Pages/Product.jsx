@@ -24,6 +24,12 @@ export const Product= () => {
 
     useEffect(()=>{
       setPage(1);
+      let api= cat.name=="Goblet of Products" ? `${process.env.REACT_APP_BASE_URL}/product?page=${page}&size=16` : `${process.env.REACT_APP_BASE_URL}/product/category/${cat.name}?page=${page}&size=16`;
+        axios.get(api)
+        .then((res)=>{
+          totalPages.current= res.data.totalPages;
+          setProducts(res.data.product);
+        });
     },[cat]);
 
     const handlePageChange= (p) => {
