@@ -1,16 +1,16 @@
 import {
-    Box,
     Image,
-    Stack,
     Text,
-    useColorModeValue as mode,
+    VStack,
   } from '@chakra-ui/react'
   import * as React from 'react'
   
   export const CartProductMeta = (props) => {
-    const { image, title, description } = props
+    const { image, title } = props
     return (
-      <Stack direction="row" spacing="5" width="full">
+      <>
+      <VStack width="full">
+        <Text fontWeight="medium">{title}</Text>
         <Image
           rounded="lg"
           width="120px"
@@ -21,14 +21,7 @@ import {
           draggable="false"
           loading="lazy"
         />
-        <Box pt="4">
-          <Stack spacing="0.5">
-            <Text fontWeight="medium">{title}</Text>
-            <Text color={mode('gray.600', 'gray.400')} fontSize="sm">
-              {description}
-            </Text>
-          </Stack>
-        </Box>
-      </Stack>
+      </VStack>
+      </>
     )
   }
