@@ -53,7 +53,7 @@ export const CartModal= () => {
           {!items.length && <Image src="./emptyCart.png" />}
         {address ? <AddressItem setCheckout= {setCheckout} setAddress={setAddress} close={onClose} /> : <Stack spacing="6">
             {items.map((item) => (
-              <CartItem key={item.id} {...item} />
+              <CartItem key={item.id} item= {item} onClose={onClose} />
             ))}
           </Stack>}
         </Stack>

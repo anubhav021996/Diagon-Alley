@@ -6,7 +6,7 @@ import { addItem } from '../../Redux/Cart/actionCart'
 import { PriceTag } from '../Products/PriceTag'
 import { CartProductMeta } from './CartProductMeta'
 
-export const CartItem = (props) => {
+export const CartItem = ({item,onClose}) => {
   const Dispatch= useDispatch();
   const {cart,auth:{token}}= useSelector((store)=>store);
   const {
@@ -15,8 +15,8 @@ export const CartItem = (props) => {
     count,
     image,
     price,
-    id
-  } = props
+    id,
+  } = item;
 
   const editItems= (prod) => {
     axios.patch(`${process.env.REACT_APP_BASE_URL}/cart/${cart.id}`,{product_id:prod},{ headers: {
@@ -58,6 +58,8 @@ export const CartItem = (props) => {
         title={title}
         description={description}
         image={image}
+        id={id}
+        onClose={onClose}
       />
 
       {/* Desktop */}

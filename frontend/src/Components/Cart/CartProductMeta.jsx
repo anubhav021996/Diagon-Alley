@@ -4,12 +4,17 @@ import {
     VStack,
   } from '@chakra-ui/react'
   import * as React from 'react'
+import { useNavigate } from 'react-router-dom';
   
   export const CartProductMeta = (props) => {
-    const { image, title } = props
+    const { image, title, id, onClose } = props;
+    const Navigate= useNavigate();
     return (
       <>
-      <VStack width="full">
+      <VStack width="full" cursor="pointer" onClick={()=>{
+                Navigate(`/productDetails`,{state:{id:id}});
+                onClose();
+              }} >
         <Text fontWeight="medium">{title}</Text>
         <Image
           rounded="lg"

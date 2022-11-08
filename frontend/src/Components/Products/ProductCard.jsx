@@ -56,7 +56,7 @@ import { PriceTag } from './PriceTag'
               onClick={()=>{
                 Navigate(`/productDetails`,{state:{id:_id}});
               }}
-              _hover={{cursor:"pointer"}}
+              cursor="pointer"
             />
           </AspectRatio>
         </Box>
@@ -66,7 +66,7 @@ import { PriceTag } from './PriceTag'
             onClick={()=>{
               Navigate(`/productDetails`,{state:{id:_id}});
             }}
-            _hover={{cursor:"pointer"}}
+            cursor="pointer"
             >
               {title}
             </Text>
@@ -74,7 +74,7 @@ import { PriceTag } from './PriceTag'
           </Stack>
           <HStack>
             <Text fontSize="sm" color={useColorModeValue('gray.600', 'gray.400')}>
-              Seller: {businessName}
+              <b>Seller:</b> {businessName}
             </Text>
           </HStack>
         </Stack>

@@ -61,7 +61,7 @@ export const Product= () => {
 
     return (
       <>
-      <Image w={"100%"} h={{sm:"400"}} src={cat.img}/>
+      <Image w={"100%"} h={{sm:"400"}} src={cat.img} cursor="pointer" />
             <VStack
     maxW="7xl"
     mx="auto"
