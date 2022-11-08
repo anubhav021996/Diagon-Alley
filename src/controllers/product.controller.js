@@ -60,7 +60,7 @@ router.get("",async(req,res)=>{
 
         const product= await Product.find().populate("user_id",{businessName:1}).skip((page-1)*size).limit(size).lean().exec();
         product.sort((a,b)=>{
-            return a._id<b._id ? -1 : a._id>b._id ? 1 : 0;
+            return a.description<b.description ? -1 : a.description>b.description ? 1 : 0;
         });
         res.status(200).send({product,totalPages});
     }
