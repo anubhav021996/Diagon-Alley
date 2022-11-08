@@ -70,8 +70,8 @@ router.get("",async(req,res)=>{
 router.get("/category/:cat",async(req,res)=>{
     try{
         let page= req.query.page || 1;
-        let size= req.query.size || await Product.find().countDocuments();
-        const totalPages= Math.ceil((await Product.find().countDocuments())/size);
+        let size= req.query.size || await Product.find({category:req.params.cat}).countDocuments();
+        const totalPages= Math.ceil((await Product.find({category:req.params.cat}).countDocuments())/size);
 
         const product= await Product.find({category:req.params.cat}).populate("user_id",{businessName:1}).skip((page-1)*size).limit(size).lean().exec();
 

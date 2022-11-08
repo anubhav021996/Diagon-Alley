@@ -4,7 +4,6 @@ import {
     Button,
     HStack,
     Image,
-    Link,
     Skeleton,
     Stack,
     Text,
@@ -54,12 +53,21 @@ import { PriceTag } from './PriceTag'
               alt={title}
               fallback={<Skeleton />}
               borderRadius={useBreakpointValue({ base: 'md', md: 'xl' })}
+              onClick={()=>{
+                Navigate(`/productDetails`,{state:{id:_id}});
+              }}
+              _hover={{cursor:"pointer"}}
             />
           </AspectRatio>
         </Box>
         <Stack>
           <Stack spacing="3">
-            <Text fontWeight="medium" color={useColorModeValue('gray.700', 'gray.400')}>
+            <Text fontWeight="medium" color={useColorModeValue('gray.700', 'gray.400')}
+            onClick={()=>{
+              Navigate(`/productDetails`,{state:{id:_id}});
+            }}
+            _hover={{cursor:"pointer"}}
+            >
               {title}
             </Text>
             <PriceTag price={price} currency="INR" />
@@ -74,16 +82,6 @@ import { PriceTag } from './PriceTag'
           <Button colorScheme="blue" width="full" disabled={!quantity || _id in obj} onClick={()=>addToCart(_id)}>
             {!quantity ? "Out of Stock" : _id in obj ? "Item Added to Cart" : "Add to cart"}
           </Button>
-          <Link
-            textDecoration="underline"
-            fontWeight="medium"
-            color={useColorModeValue('gray.600', 'gray.400')}
-            onClick={()=>{
-              Navigate(`/productDetails`,{state:{id:_id}});
-            }}
-          >
-            Quick view
-          </Link>
         </Stack>
       </Stack>
     )
