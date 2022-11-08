@@ -70,7 +70,7 @@ export const Product= () => {
     gap={10}
   >
     <Stack direction={"row"} justifyContent="space-between" width={"100%"} >
-    <Badge p={2} fontSize={"l"}>{cat.name}</Badge>
+    <Badge p={2} fontSize={"l"} cursor="pointer" >{cat.name}</Badge>
 <Select placeholder='Sort By' width={200} onChange={sortBy} >
   <option value='lth'>Price - low to high</option>
   <option value='htl'>Price - high to low</option>
