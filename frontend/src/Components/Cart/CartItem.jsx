@@ -53,7 +53,7 @@ export const CartItem = ({item,onClose}) => {
   }
 
   return (
-    <Flex direction={{ base: 'column', md: 'row' }} justify="space-between" align="center">
+    <Flex p={4} boxShadow= "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" direction={{ base: 'column', md: 'row' }} justify="space-between" align="center">
       <CartProductMeta
         title={title}
         description={description}

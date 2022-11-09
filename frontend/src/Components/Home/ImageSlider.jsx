@@ -10,8 +10,7 @@ export const ImageSlider = () => {
     "https://res.cloudinary.com/dyocvbqbf/image/upload/v1668012142/Manuals/Large_Platform2_1024x_rjqbto.webp",
     "https://res.cloudinary.com/dyocvbqbf/image/upload/v1668012142/Manuals/harrypottershop-gallery-gryffindor_ou5qaa.jpg",
     "https://res.cloudinary.com/dyocvbqbf/image/upload/v1668012142/Manuals/Kowalski_Quality_Baked_Goods_in_1932_vmwqqi.webp",
-    "https://res.cloudinary.com/dyocvbqbf/image/upload/v1668012142/Manuals/harrypottershop-gallery-interior_y6nsbh.jpg",
-    "https://res.cloudinary.com/dyocvbqbf/image/upload/v1668012141/Manuals/fantastic-beasts-cog-crop-no-wm_dcnd3v.jpg"
+    "https://res.cloudinary.com/dyocvbqbf/image/upload/v1668012142/Manuals/harrypottershop-gallery-interior_y6nsbh.jpg"
   ];
   return (
       <Carousel>

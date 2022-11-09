@@ -66,14 +66,15 @@ import { PriceTag } from './PriceTag'
             onClick={()=>{
               Navigate(`/productDetails`,{state:{id:_id}});
             }}
-            cursor="pointer"
+            cursor="pointer" align={"left"}
+            overflow={"hidden"} textOverflow={"ellipsis"} whiteSpace={"nowrap"}
             >
               {title}
             </Text>
             <PriceTag price={price} currency="INR" />
           </Stack>
           <HStack>
-            <Text fontSize="sm" color={useColorModeValue('gray.600', 'gray.400')}>
+            <Text overflow={"hidden"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} align={"left"} fontSize="sm" color={useColorModeValue('gray.600', 'gray.400')}>
               <b>Seller:</b> {businessName}
             </Text>
           </HStack>

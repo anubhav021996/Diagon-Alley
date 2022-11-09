@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
                 Navigate(`/productDetails`,{state:{id:id}});
                 onClose();
               }} >
-        <Text fontWeight="medium">{title}</Text>
+        <Text fontWeight="medium" overflow={"hidden"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} >{title}</Text>
         <Image
           rounded="lg"
           width="120px"
