@@ -11,7 +11,7 @@ body("title").notEmpty().withMessage("Title required").bail().isString().withMes
 body("description").notEmpty().withMessage("Description required").bail().isString().withMessage("Invalid description"),
 body("image").notEmpty().withMessage("Image required").bail().isURL().withMessage("Invalid image"),
 body("price").notEmpty().withMessage("Price required").bail().isNumeric().withMessage("Invalid price"),
-body("quantity").notEmpty().withMessage("Quatity required").bail().isNumeric().withMessage("Invalid quantity"),
+body("quantity").notEmpty().withMessage("Quantity required").bail().isNumeric().withMessage("Invalid quantity"),
 body("category").notEmpty().withMessage("Category required").bail().isString().withMessage("Invalid category"),
 authentication,async(req,res)=>{
     try{
