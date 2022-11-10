@@ -3,6 +3,7 @@ import {
     Flex,
     Heading,
     Link,
+    Skeleton,
     Stack,
     Text,
     useColorModeValue as mode,
@@ -29,7 +30,7 @@ import { addItem } from '../../Redux/Cart/actionCart';
     )
   }
   
-  export const CartOrderSummary = ({setAddress,address,checkout,close}) => {
+  export const CartOrderSummary = ({setAddress,address,checkout,close,editCart}) => {
     const Dispatch= useDispatch();
     const Navigate= useNavigate();
     const {cart:{items,product_id,id},auth:{token}}= useSelector((store)=>store);
@@ -134,27 +135,29 @@ import { addItem } from '../../Redux/Cart/actionCart';
         <Heading size="md">Order Summary</Heading>
   
         <Stack spacing="6">
-          <OrderSummaryItem label="Subtotal" value={formatPrice(total,"INR")} />
-          <OrderSummaryItem label="Tax" value={formatPrice(total*0.18,"INR")} />
-          <OrderSummaryItem label="Discount">-{formatPrice(total*0.10,"INR")}</OrderSummaryItem>
+        <OrderSummaryItem label="Subtotal"><Skeleton isLoaded={!editCart}>{formatPrice(total,"INR")}</Skeleton></OrderSummaryItem>
+        <OrderSummaryItem label="Tax"><Skeleton isLoaded={!editCart}>{formatPrice(total*0.18,"INR")}</Skeleton></OrderSummaryItem>
+        <OrderSummaryItem label="Discount"><Skeleton isLoaded={!editCart}>-{formatPrice(total*0.10,"INR")}</Skeleton></OrderSummaryItem>
           <OrderSummaryItem label="Shipping Charges">
             <Link href="#" textDecor="underline">
               Free Shipping
             </Link>
           </OrderSummaryItem>
-          <OrderSummaryItem label="Round-off">{formatPrice(total+(total*0.18)-(total*0.10)-Math.round(total+(total*0.18)-(total*0.10)),"INR")}</OrderSummaryItem>
+          <OrderSummaryItem label="Round-off"><Skeleton isLoaded={!editCart}>{formatPrice(total+(total*0.18)-(total*0.10)-Math.round(total+(total*0.18)-(total*0.10)),"INR")}</Skeleton></OrderSummaryItem>
           <Flex justify="space-between">
             <Text fontSize="lg" fontWeight="semibold">
               Total
             </Text>
             <Text fontSize="xl" fontWeight="extrabold">
+            <Skeleton isLoaded={!editCart}>
               {formatPrice(Math.round(total+(total*0.18)-(total*0.10)),"INR")}
+              </Skeleton>
             </Text>
           </Flex>
         </Stack>
         {checkout ? <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />} onClick={handlePayment} >
           Proceed to Payment
-        </Button> : <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={!address && <FaArrowRight />} disabled={!items.length || address} onClick={handleCheckout}>
+        </Button> : <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={!address && <FaArrowRight />} disabled={!items.length || address || editCart} onClick={handleCheckout}>
           {address ? "Please select delivery address" : "Proceed to Checkout"}
         </Button>}
       </Stack>

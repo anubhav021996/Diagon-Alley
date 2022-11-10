@@ -9,26 +9,31 @@ import { useRef } from "react";
 
 export const Product= () => {
     const [products,setProducts]= useState([]);
+    const [loading,setLoading]= useState(false);
     const {state:{cat}}= useLocation();
     const [page,setPage]= useState(1);
     const totalPages= useRef(null);
 
     useEffect(()=>{
+      setLoading(true);
       let api= cat.name=="Goblet of Products" ? `${process.env.REACT_APP_BASE_URL}/product?page=${page}&size=16` : `${process.env.REACT_APP_BASE_URL}/product/category/${cat.name}?page=${page}&size=16`;
         axios.get(api)
         .then((res)=>{
           totalPages.current= res.data.totalPages;
           setProducts(res.data.product);
+          setLoading(false);
         });
     },[page]);
 
     useEffect(()=>{
+      setLoading(true);
       setPage(1);
       let api= cat.name=="Goblet of Products" ? `${process.env.REACT_APP_BASE_URL}/product?page=${page}&size=16` : `${process.env.REACT_APP_BASE_URL}/product/category/${cat.name}?page=${page}&size=16`;
         axios.get(api)
         .then((res)=>{
           totalPages.current= res.data.totalPages;
           setProducts(res.data.product);
+          setLoading(false);
         });
     },[cat]);
 
@@ -81,7 +86,7 @@ export const Product= () => {
     
     <ProductGrid>
       {products.map((product) => (
-        <ProductCard key={product._id} product={product} />
+        <ProductCard loading={loading} key={product._id} product={product} />
       ))}
     </ProductGrid>
       

@@ -1,4 +1,4 @@
-import { CloseButton, Flex, Link, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from '@chakra-ui/react'
+import { CloseButton, Flex, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from '@chakra-ui/react'
 import axios from 'axios'
 import * as React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,7 +6,7 @@ import { addItem } from '../../Redux/Cart/actionCart'
 import { PriceTag } from '../Products/PriceTag'
 import { CartProductMeta } from './CartProductMeta'
 
-export const CartItem = ({item,onClose}) => {
+export const CartItem = ({item,onClose,editCart,setEditCart}) => {
   const Dispatch= useDispatch();
   const {cart,auth:{token}}= useSelector((store)=>store);
   const {
@@ -19,6 +19,7 @@ export const CartItem = ({item,onClose}) => {
   } = item;
 
   const editItems= (prod) => {
+    setEditCart(true);
     axios.patch(`${process.env.REACT_APP_BASE_URL}/cart/${cart.id}`,{product_id:prod},{ headers: {
       Authorization: 'Bearer ' + token 
     }}).then((res)=>{
@@ -26,6 +27,7 @@ export const CartItem = ({item,onClose}) => {
         Authorization: 'Bearer ' + token 
       }}).then((res)=>{
         Dispatch(addItem(res.data.product_id));
+        setEditCart(false);
       })
     })
   }
@@ -72,7 +74,7 @@ export const CartItem = ({item,onClose}) => {
     </NumberInputStepper>
   </NumberInput>
         <PriceTag price={price} currency="INR" />
-        <CloseButton aria-label={`Delete ${title} from cart`} onClick={handleDelete} />
+        <CloseButton disabled={editCart} aria-label={`Delete ${title} from cart`} onClick={handleDelete} />
       </Flex>
 
       {/* Mobile */}
@@ -83,9 +85,6 @@ export const CartItem = ({item,onClose}) => {
         justify="space-between"
         display={{ base: 'flex', md: 'none' }}
       >
-        <Link fontSize="sm" textDecor="underline" onClick={handleDelete} >
-          Delete
-        </Link>
         <NumberInput size='sm' maxW={20} defaultValue={count} min={1} max={5}>
     <NumberInputField disabled/>
     <NumberInputStepper>
@@ -94,6 +93,7 @@ export const CartItem = ({item,onClose}) => {
     </NumberInputStepper>
   </NumberInput>
         <PriceTag price={price} currency="INR" />
+        <CloseButton disabled={editCart} aria-label={`Delete ${title} from cart`} onClick={handleDelete} />
       </Flex>
     </Flex>
   )

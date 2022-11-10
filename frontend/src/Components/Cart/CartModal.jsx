@@ -10,6 +10,7 @@ import { CartOrderSummary } from "./CartOrderSummary";
 export const CartModal= () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [address,setAddress]= useState(false);
+    const[editCart,setEditCart]= useState(false);
     const [checkout,setCheckout]= useState("");
     const {items}= useSelector((store)=>store.cart);
 
@@ -53,13 +54,13 @@ export const CartModal= () => {
           {!items.length && <Image src="./emptyCart.png" />}
         {address ? <AddressItem setCheckout= {setCheckout} setAddress={setAddress} close={onClose} /> : <Stack spacing="6">
             {items.map((item) => (
-              <CartItem key={item.id} item= {item} onClose={onClose} />
+              <CartItem editCart={editCart} setEditCart={setEditCart} key={item.id} item= {item} onClose={onClose} />
             ))}
           </Stack>}
         </Stack>
   
         <Flex direction="column" align="center" flex="1">
-          <CartOrderSummary setAddress={setAddress} address={address} checkout={checkout} close={onClose} />
+          <CartOrderSummary editCart={editCart} setAddress={setAddress} address={address} checkout={checkout} close={onClose} />
           <HStack mt="6" fontWeight="semibold">
             <p>or</p>
             <Link as={ReachLink} color={mode('blue.500', 'blue.200')} to="/" onClick={onClose}>Continue shopping</Link>
