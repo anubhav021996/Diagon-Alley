@@ -13,7 +13,7 @@ export const ImageSlider = () => {
     "https://res.cloudinary.com/dyocvbqbf/image/upload/v1668012142/Manuals/harrypottershop-gallery-interior_y6nsbh.jpg"
   ];
   return (
-      <Carousel controls={false}>
+      <Carousel controls={false} pause={false} >
         {images.map((item) => (
           <Carousel.Item key={item} interval={3000}>
             <Image className="d-block w-100" src={item} maxH={"500"} alt="Slide image"/>
