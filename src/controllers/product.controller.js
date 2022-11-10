@@ -58,7 +58,7 @@ router.get("",async(req,res)=>{
         let size= req.query.size || await Product.find().countDocuments();
         const totalPages= Math.ceil((await Product.find().countDocuments())/size);
 
-        const product= await Product.find().populate("user_id",{businessName:1}).skip((page-1)*size).limit(size).lean().exec();
+        const product= await Product.find().sort({title:-1}).populate("user_id",{businessName:1}).skip((page-1)*size).limit(size).lean().exec();
         res.status(200).send({product,totalPages});
     }
     catch(e){
