@@ -75,9 +75,11 @@ export const EditProduct= () => {
   }
 
     const handleSubmit= () => {
+      setIsUpload(true);
       axios.patch(`${process.env.REACT_APP_BASE_URL}/product/${state.product._id}`,productData,{ headers: {
         Authorization: 'Bearer ' + token 
       }}).then((res)=>{
+        setIsUpload(false);
         Navigate("/sellerDashboard");
     })
     .catch((e)=>{
@@ -89,12 +91,12 @@ export const EditProduct= () => {
           isClosable: true,
         })
       ))
+      setIsUpload(false);
     })
     }
 
     return (
         <Flex
-        //   minH={'100vh'}
           align={'center'}
           justify={'center'}
           bg={useColorModeValue('gray.50', 'gray.800')}>

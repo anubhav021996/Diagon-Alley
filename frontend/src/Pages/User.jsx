@@ -70,12 +70,14 @@ export const User= () => {
   }
 
   const handleSubmit= () => {
+    isUpload(true);
       axios.post(`${process.env.REACT_APP_BASE_URL}/user`,formData,{ headers: {
         Authorization: 'Bearer ' + state.token 
       }}).then((res)=>{
         Dispatch(addToken(res.data.token));
         Dispatch(addUser(res.data.user));
         localStorage.setItem("token",JSON.stringify(res.data.token));
+        isUpload(false);
       })
       .catch((e)=>{
         if(e.response.data.errors){
@@ -97,12 +99,12 @@ export const User= () => {
             isClosable: true,
           });
         }
+        isUpload(false);
       })
   }
 
   return (
     <Flex
-    //   minH={'100vh'}
       align={'center'}
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}>

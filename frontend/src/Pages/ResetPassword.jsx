@@ -23,6 +23,7 @@ import { addToken, addUser } from '../Redux/Login/actionLogin';
     const {state}= useLocation();
     const [password,setPassword]= useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [loading,setLoading]= useState(false);
     const Dispatch= useDispatch();
     const Navigate= useNavigate();
 
@@ -31,12 +32,14 @@ import { addToken, addUser } from '../Redux/Login/actionLogin';
     },[]);
 
     const handleSubmit= () => {
+      setLoading(true);
         axios.patch(`${process.env.REACT_APP_BASE_URL}/user/reset`,{password:password},{ headers: {
             Authorization: 'Bearer ' + state.token 
           }}).then((res)=>{
             Dispatch(addToken(res.data.token));
             Dispatch(addUser(res.data.user));
             localStorage.setItem("token",JSON.stringify(res.data.token));
+            setLoading(false);
         })
         .catch((e)=>{
           if(e.response.data.errors){
@@ -58,12 +61,12 @@ import { addToken, addUser } from '../Redux/Login/actionLogin';
               isClosable: true,
             });
           }
+          setLoading(false);
         })
     }
 
     return (
       <Flex
-        // minH={'100vh'}
         align={'center'}
         justify={'center'}
         bg={useColorModeValue('gray.50', 'gray.800')}>
@@ -108,7 +111,7 @@ import { addToken, addUser } from '../Redux/Login/actionLogin';
               color={'white'}
               _hover={{
                 bg: 'blue.500',
-              }} onClick={handleSubmit} disabled={!password} >
+              }} onClick={handleSubmit} disabled={!password || loading} >
               Submit
             </Button>
           </Stack>

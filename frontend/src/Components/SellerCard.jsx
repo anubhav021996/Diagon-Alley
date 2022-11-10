@@ -11,7 +11,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { formatPrice } from './Products/PriceTag';
 
-export const SellerCard= ({product, deleteProduct}) => {
+export const SellerCard= ({product, deleteProduct,del}) => {
     const Navigate= useNavigate();
     return(
         <Stack
@@ -76,7 +76,7 @@ export const SellerCard= ({product, deleteProduct}) => {
               rounded={'full'}
               _focus={{
                 bg: 'gray.200',
-              }} onClick={()=>deleteProduct(product._id)}>
+              }} onClick={()=>deleteProduct(product._id)} disabled={del} >
               Delete
             </Button>
             <Button
@@ -93,7 +93,7 @@ export const SellerCard= ({product, deleteProduct}) => {
               }}
               _focus={{
                 bg: 'blue.500',
-              }} onClick={()=>Navigate("/editProduct",{state:{product:product}})} >
+              }} onClick={()=>Navigate("/editProduct",{state:{product:product}})} disabled={del} >
               Edit 
             </Button>
           </Stack>

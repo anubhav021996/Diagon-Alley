@@ -61,9 +61,11 @@ export const AddProduct= () => {
   }
 
     const handleSubmit= () => {
+      setIsUpload(true);
       axios.post(`${process.env.REACT_APP_BASE_URL}/product`,productData,{ headers: {
         Authorization: 'Bearer ' + token 
       }}).then((res)=>{
+        setIsUpload(false);
         Navigate("/sellerDashboard");
     })
     .catch((e)=>{
@@ -75,12 +77,12 @@ export const AddProduct= () => {
           isClosable: true,
         })
       ))
+      setIsUpload(false);
     })
     }
 
     return (
         <Flex
-        //   minH={'100vh'}
           align={'center'}
           justify={'center'}
           bg={useColorModeValue('gray.50', 'gray.800')}>

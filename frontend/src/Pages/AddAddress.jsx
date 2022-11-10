@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const AddAddress= () => {
   const toast= useToast();
+  const [loading,setLoading]= useState(false);
     const [addressForm,setAddressForm]= useState({
         addLine1: "",
         addLine2: "",
@@ -54,12 +55,14 @@ export const AddAddress= () => {
           isClosable: true,
         });
       }
+      setLoading(true);
         let finalAddress= ` ${addressForm.addLine1}, ${addressForm.addLine2}, ${addressForm.city}, ${addressForm.state}, ${addressForm.pincode}, ${addressForm.phone}`;
         let addArr= address.address;
         addArr.push(finalAddress);
         axios.patch(`${process.env.REACT_APP_BASE_URL}/address/${address._id}`,{address:addArr},{ headers: {
           Authorization: 'Bearer ' + token 
         }}).then((res)=>{
+          setLoading(false);
           Navigate("/address");
         })
         .catch((e)=>{
@@ -69,7 +72,6 @@ export const AddAddress= () => {
 
     return (
         <Flex
-        //   minH={'100vh'}
           align={'center'}
           justify={'center'}
           bg={useColorModeValue('gray.50', 'gray.800')}>
@@ -123,7 +125,7 @@ export const AddAddress= () => {
                 color={'white'}
                 _hover={{
                   bg: 'blue.500',
-                }} onClick={handleSubmit} >
+                }} onClick={handleSubmit} disabled={loading} >
                 Submit
               </Button>
             </Stack>

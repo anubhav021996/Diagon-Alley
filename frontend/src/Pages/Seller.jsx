@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 export const Seller= () => {
+  const [loading,setLoading]= useState(false);
     const [sellerData,setSellerData]= useState({
         businessName: "",
         gstNumber: "",
@@ -41,6 +42,7 @@ export const Seller= () => {
     }
 
     const handleSubmit= () => {
+      setLoading(true);
         let address= `${sellerData.addLine1},${sellerData.addLine2},${sellerData.city},${sellerData.state},${sellerData.pincode},${sellerData.phone}`;
         sellerData.businessAddress= address;
         delete sellerData.addLine1;
@@ -58,6 +60,7 @@ export const Seller= () => {
             position: "top",
             isClosable: true,
           })
+          setLoading(false);
           Navigate("/");
       })
       .catch((e)=>{
@@ -69,12 +72,12 @@ export const Seller= () => {
             isClosable: true,
           })
         ))
+        setLoading(false);
       })
     }
 
     return (
         <Flex
-        //   minH={'100vh'}
           align={'center'}
           justify={'center'}
           bg={useColorModeValue('gray.50', 'gray.800')}>

@@ -68,10 +68,12 @@ export const EditProfile= () => {
   }
 
   const handleSubmit= () => {
+    setIsUpload(true);
       axios.patch(`${process.env.REACT_APP_BASE_URL}/user`,formData,{ headers: {
         Authorization: 'Bearer ' + token 
       }}).then((res)=>{
         Dispatch(addUser(res.data));
+        setIsUpload(false);
         Navigate("/profile");
       })
       .catch((e)=>{
@@ -94,12 +96,12 @@ export const EditProfile= () => {
             isClosable: true,
           });
         }
+        setIsUpload(false);
       })
   }
 
   return (
     <Flex
-    //   minH={'100vh'}
       align={'center'}
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}>

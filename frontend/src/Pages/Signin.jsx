@@ -21,6 +21,7 @@ import { addToken, addUser } from '../Redux/Login/actionLogin';
 export const Signin= () => {
   const toast= useToast();
   const Dispatch= useDispatch();
+  const [loading,setLoading]= useState(false);
   const [loginData, setLoginData]= useState({
     email: "",
     password: ""
@@ -32,10 +33,12 @@ export const Signin= () => {
   }
 
   const handleSubmit= () => {
+    setLoading(true);
     axios.post(`${process.env.REACT_APP_BASE_URL}/login`,loginData).then((res)=>{
       Dispatch(addToken(res.data.token));
       Dispatch(addUser(res.data.user));
       localStorage.setItem("token",JSON.stringify(res.data.token));
+      setLoading(false);
     })
     .catch((e)=>{
       if(e.response.data.errors){
@@ -57,6 +60,7 @@ export const Signin= () => {
           isClosable: true,
         });
       }
+      setLoading(false);
     })
   }
 
@@ -98,7 +102,7 @@ export const Signin= () => {
                     color={'white'}
                     _hover={{
                       bg: 'blue.500',
-                    }} onClick={handleSubmit}
+                    }} onClick={handleSubmit} disabled={loading}
                     >
                     Sign in
                   </Button>
