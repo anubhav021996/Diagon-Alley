@@ -12,6 +12,7 @@ import {
     useToast,
   } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import ReCAPTCHA from "react-google-recaptcha";
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -24,6 +25,7 @@ import { addToken, addUser } from '../Redux/Login/actionLogin';
     const [password,setPassword]= useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [loading,setLoading]= useState(false);
+    const [verified,setVerified]= useState(false);
     const Dispatch= useDispatch();
     const Navigate= useNavigate();
 
@@ -63,6 +65,10 @@ import { addToken, addUser } from '../Redux/Login/actionLogin';
           }
           setLoading(false);
         })
+    }
+
+    const captchaChange= (e) => {
+      e ? setVerified(true) : setVerified(false);
     }
 
     return (
@@ -106,12 +112,13 @@ import { addToken, addUser } from '../Redux/Login/actionLogin';
                 </InputGroup>
           </FormControl>
           <Stack spacing={6}>
+          <ReCAPTCHA sitekey={process.env.REACT_APP_RECAPTCHA_SITEKEY} onChange={captchaChange} />
             <Button
               bg={'blue.400'}
               color={'white'}
               _hover={{
                 bg: 'blue.500',
-              }} onClick={handleSubmit} disabled={!password || loading} >
+              }} onClick={handleSubmit} disabled={!password || loading || !verified} >
               Submit
             </Button>
           </Stack>

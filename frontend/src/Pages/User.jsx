@@ -17,6 +17,7 @@ import {
     Progress
   } from '@chakra-ui/react';
   import { useEffect, useState } from 'react';
+  import ReCAPTCHA from "react-google-recaptcha";
   import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
   import { useLocation, Link as ReachLink, useNavigate } from 'react-router-dom';
   import axios from "axios";
@@ -30,6 +31,7 @@ export const User= () => {
   const toast= useToast();
   const [showPassword, setShowPassword] = useState(false);
   const [isUpload, setIsUpload]= useState(false);
+  const [verified,setVerified]= useState(false);
   const [formData,setFormData]= useState({
     firstName: "",
     lastName: "",
@@ -103,6 +105,10 @@ export const User= () => {
       })
   }
 
+  const captchaChange= (e) => {
+    e ? setVerified(true) : setVerified(false);
+  }
+
   return (
     <Flex
       align={'center'}
@@ -159,6 +165,7 @@ export const User= () => {
               {isUpload && <Progress size='xs' isIndeterminate />}
             </FormControl>
             <Stack spacing={10} pt={2}>
+            <ReCAPTCHA sitekey={process.env.REACT_APP_RECAPTCHA_SITEKEY} onChange={captchaChange} />
               <Button
                 loadingText="Submitting"
                 size="lg"
@@ -166,7 +173,7 @@ export const User= () => {
                 color={'white'}
                 _hover={{
                   bg: 'blue.500',
-                }} onClick={handleSubmit} disabled={isUpload}>
+                }} onClick={handleSubmit} disabled={isUpload || !verified}>
                 Sign up
               </Button>
             </Stack>

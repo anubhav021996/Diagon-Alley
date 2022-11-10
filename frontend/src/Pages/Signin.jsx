@@ -12,6 +12,7 @@ import {
     useToast
   } from '@chakra-ui/react';
 import axios from 'axios';
+import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { EmailVerification } from '../Components/EmailVerification';
@@ -22,6 +23,7 @@ export const Signin= () => {
   const toast= useToast();
   const Dispatch= useDispatch();
   const [loading,setLoading]= useState(false);
+  const [verified,setVerified]= useState(false);
   const [loginData, setLoginData]= useState({
     email: "",
     password: ""
@@ -64,6 +66,10 @@ export const Signin= () => {
     })
   }
 
+  const captchaChange= (e) => {
+    e ? setVerified(true) : setVerified(false);
+  }
+
     return (
         <Flex
           align={'center'}
@@ -89,7 +95,7 @@ export const Signin= () => {
                   <Input type="password" name="password" onChange={handleChange} />
                 </FormControl>
                 
-                <Stack spacing={10}>
+                <Stack spacing={5}>
                   <Stack
                     direction={{ base: 'column', sm: 'row' }}
                     align={'start'}
@@ -97,12 +103,13 @@ export const Signin= () => {
                     <Checkbox>Remember me</Checkbox>
                     <ForgetPasswordVerification />
                   </Stack>
+                  <ReCAPTCHA sitekey={process.env.REACT_APP_RECAPTCHA_SITEKEY} onChange={captchaChange} />
                   <Button
                     bg={'blue.400'}
                     color={'white'}
                     _hover={{
                       bg: 'blue.500',
-                    }} onClick={handleSubmit} disabled={loading}
+                    }} onClick={handleSubmit} disabled={loading || !verified}
                     >
                     Sign in
                   </Button>
