@@ -10,7 +10,6 @@ export const TrendingProducts= () => {
     useEffect(()=>{
         axios.get(`${process.env.REACT_APP_BASE_URL}/product?page=1&size=4`)
         .then((res)=>{
-            console.log(res.data.product);
           setTrending(res.data.product);
         });
     },[]);
