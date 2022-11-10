@@ -35,13 +35,13 @@ import { useNavigate } from 'react-router-dom';
                   position: 'absolute',
                   bottom: 1,
                   left: 0,
-                  bg: 'red.400',
+                  bg: 'blue.400',
                   zIndex: -1,
                 }}>
                 The Wand
               </Text>
               <br />
-              <Text as={'span'} color={'red.400'}>
+              <Text as={'span'} color={'blue.400'}>
               chooses the Wizard!
               </Text>
             </Heading>
@@ -55,9 +55,9 @@ import { useNavigate } from 'react-router-dom';
                 size={'lg'}
                 fontWeight={'normal'}
                 px={6}
-                colorScheme={'red'}
-                bg={'red.400'}
-                _hover={{ bg: 'red.500' }}
+                colorScheme={'blue'}
+                bg={'blue.400'}
+                _hover={{ bg: 'blue.500' }}
                 onClick={()=>Navigate("/product",{state:{cat:{name:"Ollivander's Wands",img:"https://res.cloudinary.com/dyocvbqbf/image/upload/v1667925055/Manuals/ollivanders_copy_llgpps.jpg"}}})}
                 >
                 Discover your wand
