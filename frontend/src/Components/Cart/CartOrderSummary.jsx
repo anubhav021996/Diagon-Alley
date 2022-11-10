@@ -35,6 +35,7 @@ import { addItem } from '../../Redux/Cart/actionCart';
     const Navigate= useNavigate();
     const {cart:{items,product_id,id},auth:{token}}= useSelector((store)=>store);
     const [total,setTotal]= React.useState();
+    const [loading,setLoading]= React.useState(false);
     const toast= useToast();
 
     useEffect(()=>{
@@ -73,7 +74,7 @@ import { addItem } from '../../Redux/Cart/actionCart';
     }
     
     const handlePayment = async () => {
-      close();
+      setLoading(true);
       const res = await loadRazorpay();
       if (!res) {
         alert("Load failed");
@@ -84,6 +85,7 @@ import { addItem } from '../../Redux/Cart/actionCart';
           amount: Math.round(total+(total*0.18)-(total*0.10)),
         })
         .then((res) => res.data);
+        close();
   
       const options = {
         key: process.env.REACT_APP_RAZORPAY_ID,
@@ -155,7 +157,7 @@ import { addItem } from '../../Redux/Cart/actionCart';
             </Text>
           </Flex>
         </Stack>
-        {checkout ? <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />} onClick={handlePayment} >
+        {checkout ? <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />} disabled={loading} onClick={handlePayment} >
           Proceed to Payment
         </Button> : <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={!address && <FaArrowRight />} disabled={!items.length || address || editCart} onClick={handleCheckout}>
           {address ? "Please select delivery address" : "Proceed to Checkout"}

@@ -1,20 +1,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux";
-import { useRadio, Box, useRadioGroup, HStack, Stack, Text, Button } from '@chakra-ui/react';
+import { useRadio, Box, useRadioGroup, HStack, Stack, Text, Button, Skeleton } from '@chakra-ui/react';
 import { useNavigate } from "react-router-dom";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 
 export const AddressItem= ({setCheckout,setAddress,close}) => {
     const {token}= useSelector((store)=>store.auth);
     const [options,setOptions]= useState(null);
+    const[loading,setLoading]= useState(false);
     const Navigate= useNavigate();
     
     useEffect(()=>{
+      setLoading(true);
         axios.get(`${process.env.REACT_APP_BASE_URL}/address`,{ headers: {
             Authorization: 'Bearer ' + token 
           }}).then((res)=>{
             setOptions(res.data.address);
+            setLoading(false);
           })
           .catch((e)=>{
             console.log(e);
@@ -100,6 +103,7 @@ export const AddressItem= ({setCheckout,setAddress,close}) => {
     return (
       <>
       <ArrowBackIcon onClick={handleBack} cursor={"pointer"} />
+      {loading ? <Skeleton h={300} w={500} /> : 
         <HStack {...group} flexWrap="wrap" gap="5">
         {options?.map((value) => {
         const radio = getRadioProps({ value })
@@ -109,7 +113,7 @@ export const AddressItem= ({setCheckout,setAddress,close}) => {
           </RadioCard>
         )
       })}
-      </HStack>
+      </HStack>}
       <Button onClick={()=>{
         Navigate("/addAddress");
         close();

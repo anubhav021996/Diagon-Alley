@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
-import { Badge, Image, Select, Stack, VStack } from '@chakra-ui/react'
+import { Badge, Image, Select, Skeleton, Stack, VStack } from '@chakra-ui/react'
 import { ProductGrid } from "../Components/Products/ProductGrid";
 import { ProductCard } from "../Components/Products/ProductCard";
 import { useLocation } from "react-router-dom";
@@ -84,6 +84,7 @@ export const Product= () => {
 </Select>
     </Stack>
     
+    {!products.length && <Skeleton h={1000} w={1150} />}
     <ProductGrid>
       {products.map((product) => (
         <ProductCard loading={loading} key={product._id} product={product} />

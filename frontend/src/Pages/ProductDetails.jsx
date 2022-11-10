@@ -10,7 +10,7 @@ import {
     Heading,
     SimpleGrid,
     StackDivider,
-    useColorModeValue,
+    useColorModeValue as mode,
     List,
     ListItem,
     useToast,
@@ -73,7 +73,7 @@ import { addItem } from '../Redux/Cart/actionCart';
           spacing={{ base: 8, md: 10 }}
           py={{ base: 18, md: 24 }}>
           <Flex>
-          <Skeleton isLoaded={!loading} >
+          {loading ? <Skeleton h={500} w={1000} /> :
             <Image
               rounded={'md'}
               alt={'product image'}
@@ -82,27 +82,24 @@ import { addItem } from '../Redux/Cart/actionCart';
               align={'center'}
               w={'100%'}
               h={{ base: '100%', sm: '400px', lg: '500px' }}
-            />
-            </Skeleton>
+            />}
           </Flex>
           <Stack spacing={{ base: 6, md: 10 }}>
             <VStack as={'header'} spacing={2}>
-            <Skeleton isLoaded={!loading} >
+              {loading ? <Skeleton h={20} w={500} /> : 
               <Heading
                 lineHeight={1.1}
                 fontWeight={600}
                 fontSize={{ base: '2xl', sm: '4xl', lg: '5xl' }}>
                 {product.title}
-              </Heading>
-              </Skeleton>
-              <Skeleton isLoaded={!loading} >
+              </Heading>}
+              {loading ? <Skeleton h={10} w={100} /> : 
               <Text
-                color={useColorModeValue('gray.900', 'gray.400')}
+                color={mode('gray.900', 'gray.400')}
                 fontWeight={300}
                 fontSize={'2xl'}>
                 {formatPrice(product.price,"INR")}
-              </Text>
-              </Skeleton>
+              </Text>}
             </VStack>
   
             <Stack
@@ -110,12 +107,13 @@ import { addItem } from '../Redux/Cart/actionCart';
               direction={'column'}
               divider={
                 <StackDivider
-                  borderColor={useColorModeValue('gray.200', 'gray.600')}
+                  borderColor={mode('gray.200', 'gray.600')}
                 />
               }>
+                {loading ? <Skeleton h={500} w={1000} /> : 
                 <Text fontSize={'lg'}>
                   {product.description}
-                </Text>
+                </Text>}
 
               <Box>
                 <List spacing={2}>
@@ -141,8 +139,8 @@ import { addItem } from '../Redux/Cart/actionCart';
               mt={8}
               size={'lg'}
               py={'7'}
-              bg={useColorModeValue('gray.900', 'gray.50')}
-              color={useColorModeValue('white', 'gray.900')}
+              bg={mode('gray.900', 'gray.50')}
+              color={mode('white', 'gray.900')}
               textTransform={'uppercase'}
               _hover={{
                 transform: 'translateY(2px)',
