@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
     const Navigate= useNavigate();
 
     return (
-      <Stack p={4} backgroundColor="#e6e8e8" borderRadius="2xl" spacing={useBreakpointValue({ base: '4', md: '5' })} boxShadow= "rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px" >
+      <Stack p={4} borderRadius="2xl" spacing={useBreakpointValue({ base: '4', md: '5' })} boxShadow= "rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px" >
         <Box position="relative">
           <AspectRatio ratio={4 / 3}>
             <Image
