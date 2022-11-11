@@ -10,7 +10,7 @@ export const ForgetPasswordVerification= () => {
     const[reqOtp,setReqOtp]= useState(false);
     const[sentOtp,setSentOtp]= useState(false);
     const[otpRec,setOtpRec]= useState(false);
-    const[time,setTime]= useState(5);
+    const[time,setTime]= useState(60);
     const[resend,setResend]= useState(false);
     const[otp,setOtp]= useState({
       otp1:"",
@@ -25,7 +25,7 @@ export const ForgetPasswordVerification= () => {
         setReqOtp(false);
         setSentOtp(false);
         setOtpRec(false);
-        setTime(5);
+        setTime(60);
         setResend(false);
         setOtp({
             otp1:"",
@@ -44,7 +44,7 @@ export const ForgetPasswordVerification= () => {
     const sendOtp= () => {
       setReqOtp(true);
       setResend(false);
-      setTime(5);
+      setTime(60);
         axios.post(`${process.env.REACT_APP_BASE_URL}/email`,{email:text,type:"reset"}).then((res)=>{
             setOtpRec(true);
             toast({

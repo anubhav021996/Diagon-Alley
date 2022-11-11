@@ -72,14 +72,14 @@ export const User= () => {
   }
 
   const handleSubmit= () => {
-    isUpload(true);
+    setIsUpload(true);
       axios.post(`${process.env.REACT_APP_BASE_URL}/user`,formData,{ headers: {
         Authorization: 'Bearer ' + state.token 
       }}).then((res)=>{
         Dispatch(addToken(res.data.token));
         Dispatch(addUser(res.data.user));
         localStorage.setItem("token",JSON.stringify(res.data.token));
-        isUpload(false);
+        setIsUpload(false);
       })
       .catch((e)=>{
         if(e.response.data.errors){
@@ -101,7 +101,7 @@ export const User= () => {
             isClosable: true,
           });
         }
-        isUpload(false);
+        setIsUpload(false);
       })
   }
 
