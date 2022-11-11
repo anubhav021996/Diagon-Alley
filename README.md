@@ -39,4 +39,4 @@ It is a fully responsive full stack e-commerce application built by using MERN S
 
 
 <h3>Tech Stack:</h3>
-<p>React | Redux | Chakra UI | Express | MongoDB | NodeJS</p>
+<p>MongoDB | Express | React | Redux | NodeJS | Chakra UI</p>
