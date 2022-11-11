@@ -24,9 +24,9 @@ It is a fully responsive full stack e-commerce application built by using MERN S
 
 <h3>Landing Page</h3>
 <p>User on landing page can see the list of trending products and top stores.</li>
-<div style="display:flex" >
-  <img style="width:40%;height:100%" src="https://res.cloudinary.com/dyocvbqbf/image/upload/v1668182631/Manuals/Screenshot_168_zgs1eq.png" alt=""></img>
-  <img style="width:40%;height:100%" src="https://res.cloudinary.com/dyocvbqbf/image/upload/v1668182625/Manuals/Screenshot_167_aftnz9.png" alt=""></img>
+<div style="display:flex;justify-content:space-around" >
+  <img style="width:45%;height:100px" src="https://res.cloudinary.com/dyocvbqbf/image/upload/v1668182631/Manuals/Screenshot_168_zgs1eq.png" alt=""></img>
+  <img style="width:45%;height:100px" src="https://res.cloudinary.com/dyocvbqbf/image/upload/v1668182625/Manuals/Screenshot_167_aftnz9.png" alt=""></img>
 </div>
 
 
