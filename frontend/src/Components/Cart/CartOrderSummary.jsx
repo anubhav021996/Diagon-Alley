@@ -160,7 +160,7 @@ import { addItem } from '../../Redux/Cart/actionCart';
         {checkout ? <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />} disabled={loading} onClick={handlePayment} >
           Proceed to Payment
         </Button> : <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={!address && <FaArrowRight />} disabled={!items.length || address || editCart} onClick={handleCheckout}>
-          {address ? "Please select delivery address" : "Proceed to Checkout"}
+          {address ? "Select delivery address" : "Proceed to Checkout"}
         </Button>}
       </Stack>
     )

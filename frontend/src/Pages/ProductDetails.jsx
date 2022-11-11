@@ -148,7 +148,7 @@ import { addItem } from '../Redux/Cart/actionCart';
               }}
               disabled={!product.quantity || product._id in obj || addCart} onClick={()=>addToCart(product._id)}
               >
-              {!product.quantity ? "Out of Stock" : product._id in obj ? "Item Added to Cart" : "Add to cart"}
+              {!product.quantity ? "Out of Stock" : product._id in obj ? "Added to Cart" : "Add to cart"}
             </Button>
   
             <Stack direction="row" alignItems="center" justifyContent={'center'}>

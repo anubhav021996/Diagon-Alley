@@ -86,7 +86,7 @@ import { PriceTag } from './PriceTag'
         </Stack>
         <Stack align="center">
           <Button colorScheme="blue" width="full" disabled={!quantity || _id in obj || addCart} onClick={()=>addToCart(_id)}>
-            {!quantity ? "Out of Stock" : _id in obj ? "Item Added to Cart" : "Add to cart"}
+            {!quantity ? "Out of Stock" : _id in obj ? "Added to Cart" : "Add to cart"}
           </Button>
         </Stack>
       </Stack>
