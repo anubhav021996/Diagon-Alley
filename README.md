@@ -5,14 +5,14 @@
 
 <h1>Diagon Alley</h1>
 It is a fully responsive full stack e-commerce application built by using MERN Stack along with Redux and Chakra UI. Some of the features of the application are listed below:
-<br>
+
 <ul>
   <li>Account verification / otp sent on email.</li>
   <li>Razorpay payment gateway.</li>
   <li>Not a robot authentication by google reCaptcha.</li>
   <li>Become a seller option and seller dashboard.</li>
   <li>Paginated product pages for all categories with sorting and filtering.</li>
-  <li>Cart, My orders & My address pages.</li>
+  <li>My cart, My orders & My address pages.</li>
   <li>Persisting auth token using redux.</li>
   <li>Fully responsive for all screen sizes.</li>
   <li>Authentication, Authorization & validations on all apis.</li>
@@ -23,9 +23,19 @@ It is a fully responsive full stack e-commerce application built by using MERN S
 <h3>You can see live <a href="https://diagon-alley-iota.vercel.app">here</a></h3>
 
 <h3>Landing Page</h3>
-<p>User on landing page can see the list of trending products and top stores.</li>
-<img style="height:700px;width:100%" src="https://res.cloudinary.com/dyocvbqbf/image/upload/v1668182631/Manuals/Screenshot_168_zgs1eq.png" alt=""></img>
-<img style="height:700px;width:100%" src="https://res.cloudinary.com/dyocvbqbf/image/upload/v1668182625/Manuals/Screenshot_167_aftnz9.png" alt=""></img>
+<img src="https://res.cloudinary.com/dyocvbqbf/image/upload/v1668182631/Manuals/Screenshot_168_zgs1eq.png" alt=""></img>
+
+<h3>Products Page</li>
+<img src="https://res.cloudinary.com/dyocvbqbf/image/upload/v1668187570/Manuals/Screenshot_172_q0jv9e.png" alt=""></img>
+
+<h3>Sign in</li>
+<img src="https://res.cloudinary.com/dyocvbqbf/image/upload/v1668187565/Manuals/Screenshot_176_w92jow.png" alt=""></img>
+
+<h3>My Cart</li>
+<img src="https://res.cloudinary.com/dyocvbqbf/image/upload/v1668187571/Manuals/Screenshot_173_puozyl.png" alt=""></img>
+
+<h3>Seller Dashboard</li>
+<img src="https://res.cloudinary.com/dyocvbqbf/image/upload/v1668187567/Manuals/Screenshot_183_p19j5w.png" alt=""></img>
 
 
 <h3>Tech Stack:</h3>
