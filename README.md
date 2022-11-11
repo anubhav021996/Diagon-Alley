@@ -25,16 +25,16 @@ It is a fully responsive full stack e-commerce application built by using MERN S
 <h3>Landing Page</h3>
 <img src="https://res.cloudinary.com/dyocvbqbf/image/upload/v1668182631/Manuals/Screenshot_168_zgs1eq.png" alt=""></img>
 
-<h3>Products Page</li>
+<h3>Products Page</h3>
 <img src="https://res.cloudinary.com/dyocvbqbf/image/upload/v1668187570/Manuals/Screenshot_172_q0jv9e.png" alt=""></img>
 
-<h3>Sign in</li>
+<h3>Sign in</h3>
 <img src="https://res.cloudinary.com/dyocvbqbf/image/upload/v1668187565/Manuals/Screenshot_176_w92jow.png" alt=""></img>
 
-<h3>My Cart</li>
+<h3>My Cart</h3>
 <img src="https://res.cloudinary.com/dyocvbqbf/image/upload/v1668187571/Manuals/Screenshot_173_puozyl.png" alt=""></img>
 
-<h3>Seller Dashboard</li>
+<h3>Seller Dashboard</h3>
 <img src="https://res.cloudinary.com/dyocvbqbf/image/upload/v1668187567/Manuals/Screenshot_183_p19j5w.png" alt=""></img>
 
 
