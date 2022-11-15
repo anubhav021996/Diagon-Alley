@@ -9,15 +9,20 @@ export const ImageSlider = () => {
     "https://res.cloudinary.com/dyocvbqbf/image/upload/v1668103026/Manuals/Large_Platform2_1024x_rjqbto_bvgz14.jpg",
     "https://res.cloudinary.com/dyocvbqbf/image/upload/v1668103030/Manuals/harrypottershop-gallery-gryffindor_ou5qaa_v6aqjf.jpg",
     "https://res.cloudinary.com/dyocvbqbf/image/upload/v1668103033/Manuals/harrypottershop-gallery-interior_y6nsbh_new8zg.jpg",
-    "https://res.cloudinary.com/dyocvbqbf/image/upload/v1668103578/Manuals/Kowalski_Quality_Baked_Goods_in_1932_vmwqqi_fcnlrs.jpg"
+    "https://res.cloudinary.com/dyocvbqbf/image/upload/v1668103578/Manuals/Kowalski_Quality_Baked_Goods_in_1932_vmwqqi_fcnlrs.jpg",
   ];
   return (
-      <Carousel controls={false} pause={false} >
-        {images.map((item) => (
-          <Carousel.Item key={item} interval={3000}>
-            <Image className="d-block w-100" src={item} maxH={400} alt="Slide image"/>
-          </Carousel.Item>
-        ))}
-      </Carousel>
+    <Carousel controls={false} pause={false}>
+      {images.map((item) => (
+        <Carousel.Item key={item} interval={3000}>
+          <Image
+            className="d-block w-100"
+            src={item}
+            maxH={400}
+            alt="Slide image"
+          />
+        </Carousel.Item>
+      ))}
+    </Carousel>
   );
 };

@@ -1,4 +1,4 @@
-import {Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Home } from "../Pages/Home";
 import { Signin } from "../Pages/Signin";
 import { User } from "../Pages/User";
@@ -13,31 +13,139 @@ import { EditProduct } from "../Pages/EditProduct";
 import { Profile } from "../Pages/Profile";
 import { EditProfile } from "../Pages/EditProfile";
 import { Product } from "../Pages/Product";
-import { PrivateRoutes, SellerPrivateRoute, TokenPrivateRoutes } from "./PrivateRoutes";
+import {
+  PrivateRoutes,
+  SellerPrivateRoute,
+  TokenPrivateRoutes,
+} from "./PrivateRoutes";
 import { PaymentSuccess } from "../Pages/PaymentSuccess";
 import { Orders } from "../Pages/Orders";
 import { ProductDetails } from "../Pages/ProductDetails";
 
-export const AllRoutes= () => {
-    return(
-        <Routes>
-            <Route path={"/"} element={<Home />} />
-            <Route path={"/login"} element={<TokenPrivateRoutes><Signin /></TokenPrivateRoutes>} />
-            <Route path={"/user"} element={<TokenPrivateRoutes><User /></TokenPrivateRoutes>} />
-            <Route path={"/resetPassword"} element={<TokenPrivateRoutes><ResetPassword /></TokenPrivateRoutes>} />
-            <Route path={"/seller"} element={<PrivateRoutes><Seller /></PrivateRoutes>} />
-            <Route path={"/sellerDashboard"} element={<PrivateRoutes><SellerPrivateRoute><SellerDashboard /></SellerPrivateRoute></PrivateRoutes>} />
-            <Route path={"/addProduct"} element={<PrivateRoutes><SellerPrivateRoute><AddProduct /></SellerPrivateRoute></PrivateRoutes>} />
-            <Route path={"/editProduct"} element={<PrivateRoutes><SellerPrivateRoute><EditProduct /></SellerPrivateRoute></PrivateRoutes>} />
-            <Route path={"/addAddress"} element={<PrivateRoutes><AddAddress /></PrivateRoutes>} />
-            <Route path={"/updateAddress"} element={<PrivateRoutes><UpdateAddress /></PrivateRoutes>} />
-            <Route path={"/address"} element={<PrivateRoutes><Address /></PrivateRoutes>} />
-            <Route path={"/profile"} element={<PrivateRoutes><Profile /></PrivateRoutes>} />
-            <Route path={"/editProfile"} element={<PrivateRoutes><EditProfile /></PrivateRoutes>} />
-            <Route path={"/product"} element={<Product />} />
-            <Route path={"/productDetails"} element={<ProductDetails />} />
-            <Route path={"/paymentSuccess"} element={<PrivateRoutes><PaymentSuccess /></PrivateRoutes>} />
-            <Route path={"/orders"} element={<PrivateRoutes><Orders /></PrivateRoutes>} />
-        </Routes>
-    )
-}
+export const AllRoutes = () => {
+  return (
+    <Routes>
+      <Route path={"/"} element={<Home />} />
+      <Route
+        path={"/login"}
+        element={
+          <TokenPrivateRoutes>
+            <Signin />
+          </TokenPrivateRoutes>
+        }
+      />
+      <Route
+        path={"/user"}
+        element={
+          <TokenPrivateRoutes>
+            <User />
+          </TokenPrivateRoutes>
+        }
+      />
+      <Route
+        path={"/resetPassword"}
+        element={
+          <TokenPrivateRoutes>
+            <ResetPassword />
+          </TokenPrivateRoutes>
+        }
+      />
+      <Route
+        path={"/seller"}
+        element={
+          <PrivateRoutes>
+            <Seller />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path={"/sellerDashboard"}
+        element={
+          <PrivateRoutes>
+            <SellerPrivateRoute>
+              <SellerDashboard />
+            </SellerPrivateRoute>
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path={"/addProduct"}
+        element={
+          <PrivateRoutes>
+            <SellerPrivateRoute>
+              <AddProduct />
+            </SellerPrivateRoute>
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path={"/editProduct"}
+        element={
+          <PrivateRoutes>
+            <SellerPrivateRoute>
+              <EditProduct />
+            </SellerPrivateRoute>
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path={"/addAddress"}
+        element={
+          <PrivateRoutes>
+            <AddAddress />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path={"/updateAddress"}
+        element={
+          <PrivateRoutes>
+            <UpdateAddress />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path={"/address"}
+        element={
+          <PrivateRoutes>
+            <Address />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path={"/profile"}
+        element={
+          <PrivateRoutes>
+            <Profile />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path={"/editProfile"}
+        element={
+          <PrivateRoutes>
+            <EditProfile />
+          </PrivateRoutes>
+        }
+      />
+      <Route path={"/product"} element={<Product />} />
+      <Route path={"/productDetails"} element={<ProductDetails />} />
+      <Route
+        path={"/paymentSuccess"}
+        element={
+          <PrivateRoutes>
+            <PaymentSuccess />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path={"/orders"}
+        element={
+          <PrivateRoutes>
+            <Orders />
+          </PrivateRoutes>
+        }
+      />
+    </Routes>
+  );
+};

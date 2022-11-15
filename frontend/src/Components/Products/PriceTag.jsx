@@ -1,33 +1,28 @@
-import { HStack, Text } from '@chakra-ui/react'
+import { HStack, Text } from "@chakra-ui/react";
 
-export const formatPrice= (value,currency) => {
-const locale = 'en-US';
+export const formatPrice = (value, currency) => {
+  const locale = "en-US";
   const formatter = new Intl.NumberFormat(locale, {
     currency,
-    style: 'currency',
+    style: "currency",
     maximumFractionDigits: 2,
-  })
-  return formatter.format(value)
-}
+  });
+  return formatter.format(value);
+};
 
 export const PriceTag = (props) => {
-  const { price, currency } = props
+  const { price, currency } = props;
   return (
     <HStack spacing="1">
-      <Price>
-        {formatPrice(price, currency )}
-      </Price>
+      <Price>{formatPrice(price, currency)}</Price>
     </HStack>
-  )
-}
+  );
+};
 
-const Price = ({children}) => {
+const Price = ({ children }) => {
   return (
-    <Text
-      as="span"
-      fontWeight="medium"
-    >
+    <Text as="span" fontWeight="medium">
       {children}
     </Text>
-  )
-}
+  );
+};
