@@ -16,6 +16,7 @@ export const ImageSlider = () => {
       {images.map((item) => (
         <Carousel.Item key={item} interval={3000}>
           <Image
+          
             className="d-block w-100"
             src={item}
             maxH={400}
